@@ -6,15 +6,13 @@ import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
+import { Dashboard } from "./pages/Dashboard";
+import { NewActivity } from "./pages/Activities/New";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />
-  },
-  {
-    path: "contact",
-    element: <div>contato</div>
   },
   {
     path: "auth",
@@ -27,6 +25,20 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />
+      }
+    ]
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard />
+  },
+  {
+    path: "activities",
+    element: <Auth />,
+    children: [
+      {
+        path: "new",
+        element: <NewActivity />
       }
     ]
   }
