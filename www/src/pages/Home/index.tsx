@@ -1,16 +1,16 @@
 import { FiLogIn } from "react-icons/fi";
 import { GoMegaphone } from "react-icons/go";
 import { Link } from "react-router-dom";
-import Images from "../../assets/brand/logo.png";
 
 import "./Home.css";
+import { Logo } from "../../components/Logo";
 
 export function Home() {
   return (
     <div id="page-home">
       <div className="content">
         <header>
-          <img src={Images} alt="Ecoleta" />
+          <Logo />
         </header>
         <main>
           <h1>Seu marketplae de eventos culturais</h1>

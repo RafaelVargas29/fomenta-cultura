@@ -38,7 +38,7 @@ export function Register() {
           >
             Inscrever-se
           </button>
-          <div className="border-t-2 border-gray-100 mt-7 pt-4 text-sm sm:text-base">
+          <div className="border-t-2 border-zinc-950 mt-4 pt-4 text-sm sm:text-base">
             <p>
               Você já tem conta?{" "}
               <Link

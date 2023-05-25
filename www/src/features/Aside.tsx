@@ -1,12 +1,15 @@
 import { FiPower } from "react-icons/fi";
 import { Navbar } from "../components/Navbar";
 import { Divider } from "../components/Divider";
+import { Logo } from "../components/Logo";
 
 export function Asidebar() {
   return (
-    <aside className="sidebar bg-gradient-custom">
-      <section className="">
-        <h2 className="sidebar-title">Fomenta Cultura</h2>
+    <aside className="sidebar">
+      <section>
+        <div className="overflow-hidden">
+          <Logo alt />
+        </div>
         <Divider />
         <h3 className="text-sm mb-6">Menu</h3>
         <Navbar />
