@@ -12,9 +12,17 @@ class ActivityController extends Controller
         return Activity::all();
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $activity = new Activity;
+
+        $activity->name        = $request->name;
+        $activity->date        = $request->date;
+        $activity->time        = $request->time;
+        $activity->description = $request->description;
+        $activity->image       = $request->image;
+
+        $activity->save();
     }
 
     public function store(Request $request)
