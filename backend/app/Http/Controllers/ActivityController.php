@@ -12,7 +12,7 @@ class ActivityController extends Controller
         return Activity::all();
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $activity = new Activity;
 
@@ -23,11 +23,6 @@ class ActivityController extends Controller
         $activity->image       = $request->image;
 
         $activity->save();
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function show(int $activity)
