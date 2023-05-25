@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 export function Login() {
   return (
     <main
-      className={`min-h-screen flex flex-col gap-9 items-center justify-center px-4 sm:px-0 bg-gray-700`}
+      className={`min-h-screen flex flex-col gap-9 items-center justify-center px-4 sm:px-0`}
     >
       <div
-        className={`max-w-xs w-full flex flex-col gap-4 shadow-2xl rounded-md p-8 bg-gray-900 lg:max-w-lg`}
+        className={`max-w-xs w-full flex flex-col gap-4 shadow-2xl rounded-md p-8 lg:max-w-lg`}
       >
         <h2 className="text-center mb-3 text-xl font-semibold ">
           Realize seu login na plataforma
