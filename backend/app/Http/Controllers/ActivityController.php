@@ -14,15 +14,21 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        $activity = new Activity;
+        try {
+            $activity = new Activity;
 
-        $activity->name        = $request->name;
-        $activity->date        = $request->date;
-        $activity->time        = $request->time;
-        $activity->description = $request->description;
-        $activity->image       = $request->image;
+            $activity->name        = $request->name;
+            $activity->date        = $request->date;
+            $activity->time        = $request->time;
+            $activity->description = $request->description;
+            $activity->image       = $request->image;
+            $activity->save();
 
-        $activity->save();
+            return response()->json(['message' => 'Atividade cadastrada com sucesso'], 200);
+
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Falha ao cadastrar atividade'], 500);
+        }
     }
 
     public function show(int $activity)
@@ -44,13 +50,20 @@ class ActivityController extends Controller
 
     public function update(Request $request, Activity $activity)
     {
-        $activity->name        = $request->name;
-        $activity->date        = $request->date;
-        $activity->time        = $request->time;
-        $activity->description = $request->description;
-        $activity->image       = $request->image;
+        try {
+            $activity->name        = $request->name;
+            $activity->date        = $request->date;
+            $activity->time        = $request->time;
+            $activity->description = $request->description;
+            $activity->image       = $request->image;
+            $activity->save();
 
-        $activity->save();
+            return response()->json(['message' => 'Atividade editada com sucesso'], 200);
+
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Falha ao editar atividade'], 500);
+        }
+
     }
 
     public function destroy(string $id)
@@ -60,6 +73,7 @@ class ActivityController extends Controller
             $activity->delete();
 
             return response()->json(['message' => 'Atividade deletada com sucesso'], 200);
+            
         } catch (\Exception $e) {
             return response()->json(['message' => 'Falha ao deletar a atividade'], 500);
         }
