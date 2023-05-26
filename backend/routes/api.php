@@ -18,6 +18,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/activity/{activity}', [ActivityController::class, 'show']);
-Route::get('/activity', [ActivityController::class, 'index']);
-Route::post('/activity', [ActivityController::class, 'store']);
+Route::resource('activity', ActivityController::class);
+
