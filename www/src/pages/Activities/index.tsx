@@ -1,12 +1,11 @@
-import { BiPlusCircle } from "react-icons/bi";
-import ViewContainer from "../../layouts/ViewContainer";
-import { Summary } from "../../components/Dashboard/Summary";
 import { Link } from "react-router-dom";
+import ViewContainer from "../../layouts/ViewContainer";
+import { BiPlusCircle } from "react-icons/bi";
 
-export function Dashboard() {
+export function Activities() {
   return (
     <ViewContainer>
-      <Summary />
+      <div>1</div>
 
       <section className={`mt-16 overflow-auto h-[320px] w-full m-auto px-6`}>
         <div className="mb-6 flex items-center justify-between">

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import ViewContainer from "../../../layouts/ViewContainer";
 import "./styles.css";
 import { FiArrowLeft } from "react-icons/fi";
-import { Logo } from "../../../components/Logo";
 import { BiCamera } from "react-icons/bi";
 import MediaPicker from "../../../components/MediaPicker";
 export function NewActivity() {

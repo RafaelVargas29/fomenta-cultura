@@ -1,51 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./styles/index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { Auth } from "./pages/Auth";
 import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
 import { Dashboard } from "./pages/Dashboard";
+import { Activities } from "./pages/Activities";
 import { NewActivity } from "./pages/Activities/New";
+import { PrivateRoute } from "./layouts/PrivateRoute";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />
-  },
-  {
-    path: "auth",
-    element: <Auth />,
-    children: [
-      {
-        path: "login",
-        element: <Login />
-      },
-      {
-        path: "register",
-        element: <Register />
-      }
-    ]
-  },
-  {
-    path: "dashboard",
-    element: <Dashboard />
-  },
-  {
-    path: "activities",
-    element: <Auth />,
-    children: [
-      {
-        path: "new",
-        element: <NewActivity />
-      }
-    ]
-  }
-]);
+import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" index element={<Home />} />
+        <Route path="auth">
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/activities">
+            <Route path="new" element={<NewActivity />} />
+            <Route path="all" element={<Activities />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );

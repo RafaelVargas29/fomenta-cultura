@@ -1,31 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary-color: #f59e0b;
-  --secondary-color: #8f1dde;
-  --title-color: #322153;
-  --text-color: #494d4b;
-
-  /* 
-  primary: ,
-  : "#",
-  titlecolor: "#322153",
-  textcolor: "#6c6c80",
-  info: "#60a5fa",
-  success: "#34cb79",
-  warning: "#fbbf24",
-  error: "#dc2626" */
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 html {
   behavior: smooth;
 }
@@ -40,28 +18,76 @@ body,
 input,
 textarea,
 button {
-  font-family: "Roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 @layer components {
-  .quick-links {
-    @apply w-56 h-24 rounded-lg border border-red-500 flex items-center justify-center gap-4 flex-row-reverse;
+  .fixed-element {
+    @apply fixed top-0 left-0 right-0 z-10;
   }
   .icon {
     @apply flex-shrink-0 h-6 w-6;
   }
-  /* sidebar */
-  .sidebar {
-    @apply bg-[#9164FA] px-4 py-8 flex flex-col justify-between w-16 lg:w-[220px];
+  .text-invisible {
+    @apply invisible h-0 w-0 hidden md:block md:visible md:h-auto md:w-auto text-sm;
   }
-  .sidebar-title {
-    @apply text-sm md:text-2xl font-bold text-center text-[#494D4B];
+  .bg-gradient-alt {
+    color: #fff;
+    background: rgb(244, 189, 79);
+    background: -moz-linear-gradient(
+      112deg,
+      rgba(244, 189, 79, 1) 0%,
+      rgba(245, 132, 11, 1) 25%,
+      rgba(245, 89, 11, 1) 60%
+    );
+    background: -webkit-linear-gradient(
+      112deg,
+      rgba(244, 189, 79, 1) 0%,
+      rgba(245, 132, 11, 1) 25%,
+      rgba(245, 89, 11, 1) 60%
+    );
+    background: linear-gradient(
+      112deg,
+      rgba(244, 189, 79, 1) 0%,
+      rgba(245, 132, 11, 1) 25%,
+      rgba(245, 89, 11, 1) 60%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f4bd4f",endColorstr="#f5590b",GradientType=1);
   }
-  .sidebar-link {
-    @apply flex items-center justify-center text-zinc-300 gap-3 hover:text-white transition-colors duration-300;
+  .bg-gradient {
+    color: #fff;
+    background: rgb(245, 89, 11);
+    background: -moz-linear-gradient(
+      180deg,
+      rgba(245, 89, 11, 1) 50%,
+      rgba(245, 132, 11, 1) 70%,
+      rgba(244, 189, 79, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      180deg,
+      rgba(245, 89, 11, 1) 50%,
+      rgba(245, 132, 11, 1) 70%,
+      rgba(244, 189, 79, 1) 100%
+    );
+    background: linear-gradient(
+      180deg,
+      rgba(245, 89, 11, 1) 50%,
+      rgba(245, 132, 11, 1) 70%,
+      rgba(244, 189, 79, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f5590b",endColorstr="#f4bd4f",GradientType=1);
   }
-  .sidebar-text {
-    @apply h-0 w-0 invisible lg:visible lg:h-full lg:w-full font-medium;
+  .btn {
+    @apply px-4 py-3 rounded-lg capitalize cursor-pointer shadow-lg flex items-center justify-center hover:shadow-none;
+  }
+  .bg-hover {
+    @apply bg-secondary/70 text-white hover:bg-secondary transition-all duration-300;
+  }
+  .btn-fill {
+    @apply font-semibold md:bg-gradient md:text-white md:p-4 md:rounded-full md:w-32 !important;
+  }
+  .btn-primary {
+    @apply text-primary;
   }
   .input-clean {
     @apply border-none outline-0 focus:ring-0;
@@ -69,40 +95,71 @@ button {
   .input {
     @apply text-black  border border-zinc-200 w-full shadow-sm h-12 px-3 rounded;
   }
-  .bg-color-hover {
-    @apply bg-secondary/70 text-white hover:bg-secondary transition-all duration-300;
+
+  /* sidebar */
+  .sidebar {
+    @apply h-screen w-16 p-8 flex flex-col bg-[#9164FA] lg:w-[220px];
   }
-  .flexCenter {
-    @apply flex items-center justify-center;
+  .sidebar-title {
+    @apply text-sm md:text-2xl font-bold text-center;
+    /* text-[#494D4B] */
   }
-  .flexCol {
-    @apply flex flex-col;
+  .sidebar-link {
+    @apply flex items-center justify-center text-zinc-300 gap-3 hover:text-white transition-colors duration-300;
   }
-  .flexColReverse {
-    @apply flex flex-col-reverse;
+
+  .sidebar-text {
+    @apply h-0 w-0 invisible lg:visible lg:h-full lg:w-full font-medium;
   }
-  .flexRow {
-    @apply flex flex-row;
-  }
-  .flexRowReverse {
-    @apply flex flex-row-reverse;
-  }
-  .bg-gradient-custom {
-  }
-  .radius-base {
-    @apply rounded-lg;
-  }
-  .btn {
-    @apply px-4 py-3 rounded-lg cursor-pointer shadow-lg hover:shadow-none;
-  }
+
   .th {
-    @apply p-2 text-left bg-slate-300 text-base leading-relaxed first:rounded-tl-lg last:rounded-tr-lg;
+    @apply p-2 text-left bg-secondary/70 text-white text-base leading-relaxed first:rounded-tl-lg last:rounded-tr-lg;
   }
   .td {
-    @apply bg-white/70 border-t-4 text-sm p-2 leading-relaxed first:pl-4 last:pr-4;
+    @apply bg-white border-t-4 text-sm p-2 leading-relaxed first:pl-4 last:pr-4;
   }
-}
 
+  /* DropDown */
+  li {
+    float: left;
+  }
+
+  li a,
+  .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    z-index: 30;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  .dropdown-content a {
+    border-radius: 8px;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  /**/
+}
 /*
     https://github.com/tailwindlabs/tailwindcss/discussions/2394
     https://github.com/tailwindlabs/tailwindcss/pull/5732
