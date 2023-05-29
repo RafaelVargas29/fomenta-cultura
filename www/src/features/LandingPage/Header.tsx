@@ -22,7 +22,7 @@ export function Header() {
         <h2 className=" font-semibold text-xl">Fomenta Cultura</h2>
 
         <Link
-          to="/auth/login"
+          to="/login"
           className="flex items-center gap-2 py-3 text-primary md:btn md:bg-gradient"
         >
           <BiLogIn size={18} className="text-invisible" />

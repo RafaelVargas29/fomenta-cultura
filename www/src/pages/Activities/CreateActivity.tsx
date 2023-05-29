@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-import ViewContainer from "../../../layouts/ViewContainer";
-import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
+import ViewContainer from "../../layouts/ViewContainer";
+import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { api } from "../../../lib/axios/api";
+import { api } from "../../lib/axios/api";
+import MediaPicker from "../../components/MediaPicker";
 
 export function CreateActivity() {
   const [form, setForm] = useState({
-    name: {
+    title: {
       hasChanged: false,
       value: ""
     },
@@ -23,10 +24,10 @@ export function CreateActivity() {
       value: ""
     }
   });
-  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
     setForm({
       ...form,
-      name: {
+      title: {
         hasChanged: true,
         value: event.target.value
       }
@@ -63,7 +64,7 @@ export function CreateActivity() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const information = {
-      name: formData.get("name"),
+      title: formData.get("title"),
       description: formData.get("description"),
       dateEvent: formData.get("dateEvent"),
       hoursEvent: formData.get("hoursEvent"),
@@ -73,7 +74,7 @@ export function CreateActivity() {
     console.log(result);
 
     setForm({
-      name: {
+      title: {
         hasChanged: false,
         value: ""
       },
@@ -91,6 +92,7 @@ export function CreateActivity() {
       }
     });
   }
+
   return (
     <ViewContainer>
       <Link
@@ -106,21 +108,21 @@ export function CreateActivity() {
       >
         <h1 className="text-lg md:text-xl mb-2">Cadastro de Atividade</h1>
         <fieldset>
-          <label htmlFor="name" className="flex-1 flex flex-col mb-6">
-            Nome
+          <label htmlFor="title" className="flex-1 flex flex-col mb-6">
+            Título:
             <input
               type="text"
-              name="name"
-              id="name"
+              name="title"
+              id="title"
               placeholder="Nome da Atividade"
               className="input input-clean bg-gray-200"
-              value={form.name.value}
-              onChange={(event) => handleNameChange(event)}
-              data-testid="name"
+              value={form.title.value}
+              onChange={(event) => handleTitleChange(event)}
+              data-testid="title"
             />
           </label>
           <label htmlFor="description" className="flex-1 flex flex-col mb-6">
-            Descrição
+            Descrição:
             <input
               type="text"
               name="description"
@@ -134,7 +136,7 @@ export function CreateActivity() {
           </label>
           <div className="flex flex-wrap gap-4">
             <label htmlFor="dateEvent" className="flex-1 flex flex-col mb-6">
-              Data
+              Data:
               <input
                 type="date"
                 name="dateEvent"
@@ -146,7 +148,7 @@ export function CreateActivity() {
               />
             </label>
             <label htmlFor="hoursEvent" className="flex-1 flex flex-col mb-6">
-              Hora
+              Hora:
               <input
                 type="text"
                 name="hoursEvent"
@@ -159,13 +161,23 @@ export function CreateActivity() {
               />
             </label>
           </div>
+          <div className="flex items-center gap-9 h-[115px] justify-between">
+            <label
+              htmlFor="media"
+              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
+            >
+              <BiCamera className={`icon`} />
+              Anexar folder
+            </label>
+            <MediaPicker />
+          </div>
         </fieldset>
         <div className="flex justify-end">
           <button
             type="submit"
             data-testid="login-button"
             disabled={
-              !form.name.value ||
+              !form.title.value ||
               !form.description.value ||
               !form.dateEvent.value ||
               !form.hoursEvent.value

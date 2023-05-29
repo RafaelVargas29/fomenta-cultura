@@ -1,7 +1,10 @@
-import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../../lib/axios/api";
 
 export function Login() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: {
       hasChanged: false,
@@ -35,6 +38,33 @@ export function Login() {
       }
     });
   }
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const userDatas = {
+      email: form.email.value,
+      password: form.password.value
+    };
+    /* faz chamada para api fake e retorna todos os usuarios */
+    const preResult = await api.get("users");
+    const result = preResult.data;
+
+    /* faz filtro e procura o usuario q verio do login. retorna um array */
+    const userValidated = result.filter(
+      (u: { email: string }) => u.email === userDatas.email
+    );
+
+    if (userValidated.length > 0) {
+      navigate(`/dashboard`);
+
+      // const user = userValidated[0].email;
+      // localStorage.setItem("user", JSON.stringify(user));
+      // window.location.href = "/";
+    }
+    /* caso o usuario não seja encontrado */
+    if (userValidated.length <= 0) {
+      alert("Usuário não encontrado");
+    }
+  }
 
   return (
     <main
@@ -46,7 +76,10 @@ export function Login() {
         <h2 className="text-center mb-3 text-xl font-semibold ">
           Realize seu login na plataforma
         </h2>
-        <form className={`flex flex-col gap-4`}>
+        <form
+          onSubmit={(e) => handleLogin(e)}
+          className={`flex flex-col gap-4`}
+        >
           <div className="flex flex-col gap-1">
             <label htmlFor="email">E-mail</label>
             <input
@@ -98,7 +131,7 @@ export function Login() {
               </span>
             ) : (
               <span className="text-sm font-medium leading-relaxed pl-1">
-                Digite sua senha{" "}
+                Digite sua senha
               </span>
             )}
           </div>
@@ -114,7 +147,7 @@ export function Login() {
           <div className="border-t-2 border-zinc-950 mt-4 pt-4 text-sm sm:text-base">
             <p>
               Não tem uma conta?{" "}
-              <Link to={"/auth/register"} className="text-blue-50 underline">
+              <Link to={"/register"} className="text-blue-50 underline">
                 Cadastre-se
               </Link>
             </p>

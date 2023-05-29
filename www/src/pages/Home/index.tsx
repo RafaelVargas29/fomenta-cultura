@@ -22,7 +22,7 @@ export function Home() {
               </p>
               <div className="mt-6 flex gap-4 flex-shrink-0 flex-wrap items-center lg:gap-10">
                 <Link
-                  to="/auth/login"
+                  to="/login"
                   className="border border-zinc-50 flex items-center gap-3 btn"
                 >
                   <span>

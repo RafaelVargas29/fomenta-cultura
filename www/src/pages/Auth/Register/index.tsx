@@ -1,6 +1,8 @@
-import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../../lib/axios/api";
 export function Register() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: {
       hasChanged: false,
@@ -47,6 +49,17 @@ export function Register() {
     });
   }
 
+  async function handleCreateUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const userDatas = {
+      name: form.name.value,
+      email: form.email.value,
+      password: form.password.value
+    };
+    await api.post("users", userDatas);
+    navigate(`/login`);
+  }
+
   return (
     <main
       className={`min-h-screen flex flex-col gap-9 items-center justify-center px-4 sm:px-0`}
@@ -57,7 +70,10 @@ export function Register() {
         <h2 className="text-center mb-3 text-xl font-semibold ">
           Realize seu cadastro na plataforma
         </h2>
-        <form className={`flex flex-col gap-4`}>
+        <form
+          onSubmit={(e) => handleCreateUser(e)}
+          className={`flex flex-col gap-4`}
+        >
           <div className="flex flex-col gap-1">
             <label htmlFor="name">Nome da Organização</label>
             <input
@@ -128,9 +144,13 @@ export function Register() {
               >
                 Senha é obrigatória
               </span>
+            ) : form.password.hasChanged && form.password.value.length < 6 ? (
+              <span className="text-sm font-medium leading-relaxed pl-1 text-amber-500">
+                A senha precisa ter mínimo de 6 caracteres
+              </span>
             ) : (
               <span className="text-sm font-medium leading-relaxed pl-1">
-                Digite sua senha{" "}
+                Digite sua senha
               </span>
             )}
           </div>
@@ -150,7 +170,7 @@ export function Register() {
           <div className="border-t-2 border-zinc-950 mt-4 pt-4 text-sm sm:text-base">
             <p>
               Você já tem conta?{" "}
-              <Link to={"/auth/login"} className="text-blue-50 hover:underline">
+              <Link to={"/login"} className="text-blue-50 hover:underline">
                 Faça login
               </Link>
             </p>

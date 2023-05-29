@@ -1,10 +1,34 @@
 {
   "users": [
     {
-      "email": "admin@a.com",
-      "password": "admin",
-      "name": "admin"
+      "name": "admin",
+      "email": "admin@mail.com",
+      "password": "123456",
+      "id": 1
+    },
+    {
+      "name": "teste",
+      "email": "teste@mail.com",
+      "password": "123456",
+      "id": 2
     }
   ],
-  "activities": []
+  "activities": [
+    {
+      "title": "a",
+      "description": "a",
+      "dateEvent": "2023-05-30",
+      "hoursEvent": "20:00",
+      "status": "agendado",
+      "id": 1
+    },
+    {
+      "title": "teste",
+      "description": "teste",
+      "dateEvent": "1000-01-01",
+      "hoursEvent": "3030",
+      "status": "agendado",
+      "id": 2
+    }
+  ]
 }
