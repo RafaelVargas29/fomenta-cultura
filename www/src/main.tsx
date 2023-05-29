@@ -6,7 +6,7 @@ import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
 import { Dashboard } from "./pages/Dashboard";
 import { Activities } from "./pages/Activities";
-import { NewActivity } from "./pages/Activities/New";
+import { CreateActivity } from "./pages/Activities/New";
 import { PrivateRoute } from "./layouts/PrivateRoute";
 
 import "./styles/index.css";
@@ -20,12 +20,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
-        <Route path="/" element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/activities">
-            <Route path="new" element={<NewActivity />} />
-            <Route path="all" element={<Activities />} />
-          </Route>
+
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/activities">
+          <Route path="new" element={<CreateActivity />} />
+          <Route path="all" element={<Activities />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,10 @@
 {
   "users": [
-    { "email": "teste@mail.com", "password": "test", "name": "teste" },
-    { "email": "teste2@mail.com", "password": "test", "name": "teste2" },
-    { "email": "teste3@mail.com", "password": "test", "name": "teste3" }
-  ]
+    {
+      "email": "admin@a.com",
+      "password": "admin",
+      "name": "admin"
+    }
+  ],
+  "activities": []
 }
