@@ -17,11 +17,9 @@ class OrganizationController extends Controller
         try {
             $organization = new Organization;
 
-            $organization->name      = $request->name;
-            $organization->email     = $request->email;
-            $organization->address   = $request->address;
-            $organization->contact   = $request->contact;
-            $organization->password  = $request->password;
+            $organization->name_organization      = $request->name_organization;
+            $organization->email_organization     = $request->email_organization;
+            $organization->password_organization  = $request->password_organization;
             $organization->save();
 
             return response()->json(['message' => 'Organização cadastrada com sucesso'], 200);
@@ -51,11 +49,9 @@ class OrganizationController extends Controller
     public function update(Request $request, Organization $organization)
     {
         try {
-            $organization->name      = $request->name;
-            $organization->email     = $request->email;
-            $organization->address   = $request->address;
-            $organization->contact   = $request->contact;
-            $organization->password  = $request->password;
+            $organization->name_organization      = $request->name_organization;
+            $organization->email_organization     = $request->email_organization;
+            $organization->password_organization  = $request->password_organization;
             $organization->save();
 
             return response()->json(['message' => 'Organização editada com sucesso'], 200);
