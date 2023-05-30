@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiPlusCircle } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { api } from "../../../lib/axios/api";
+import { api } from "../../../libs/axios/api";
 
 interface Activity {
   id: number;

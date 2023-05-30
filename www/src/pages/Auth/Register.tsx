@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { api } from "../../lib/axios/api";
+import { api } from "../../libs/axios/api";
 
 export function Register() {
   const navigate = useNavigate();

@@ -1,9 +1,13 @@
+/* eslint-disable prefer-const */
 import { Link } from "react-router-dom";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { api } from "../../../lib/axios/api";
+import { api } from "../../../libs/axios/api";
 import MediaPicker from "../../../components/MediaPicker";
+
+import * as firebase from "../../../services/firebase";
+import { ImageActivities } from "../../../@types/ImageActivities";
 
 export function CreateActivity() {
   const [form, setForm] = useState({
@@ -61,14 +65,33 @@ export function CreateActivity() {
     });
   }
   async function handleCreateActivity(event: FormEvent<HTMLFormElement>) {
+    /**
+     * Salva as informação
+     * 1 - stop do form
+     * 2 - pega a imagem e fazer upload dela no firebase
+     * 3 - pega a referencia da imagem e adicionar no objeto
+     * 4 - enviar dados para o backend
+     * 5 - se tudo tiver certo enviar mensagem de sucesso para o usuario
+     * 6 - redirecionar usuario para pagina de atividades
+     */
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const fileToUpload = formData.get("coverUrl") as File;
+    console.log(fileToUpload);
+    let imageURL = "";
+    if (fileToUpload) {
+      let result: any = await firebase.insert(fileToUpload);
+
+      console.log(result);
+      imageURL = result.url;
+    }
     const information = {
       title: formData.get("title"),
       description: formData.get("description"),
       dateEvent: formData.get("dateEvent"),
       hoursEvent: formData.get("hoursEvent"),
-      status: "agendado"
+      status: "agendado",
+      imageURL
     };
     const result = await api.post("activities", information);
     console.log(result);
@@ -128,7 +151,7 @@ export function CreateActivity() {
               name="description"
               id="description"
               placeholder="Descrição da atividade..."
-              className="input input-clean bg-gray-200"
+              className="input input-clean h-20 bg-gray-200"
               value={form.description.value}
               onChange={(event) => handleDescriptionChange(event)}
               data-testid="description"
@@ -161,18 +184,18 @@ export function CreateActivity() {
               />
             </label>
           </div>
-          <div className="flex items-center gap-9 h-[115px] justify-between">
+          <div className="flex items-center gap-9 h-[115px]">
             <label
               htmlFor="media"
               className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
             >
               <BiCamera className={`icon`} />
-              Anexar folder
+              Anexar imagem
             </label>
             <MediaPicker />
           </div>
         </fieldset>
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-5">
           <button
             type="submit"
             data-testid="login-button"

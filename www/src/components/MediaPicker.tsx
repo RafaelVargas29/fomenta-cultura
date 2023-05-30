@@ -22,12 +22,16 @@ export default function MediaPicker() {
         accept="image/*"
         className={`h-0 w-0 invisible`}
       />
-      {preview && (
+      {preview ? (
         <img
           src={preview}
           alt=""
-          className={`w-24 h-28 overflow-hidden object-cover`}
+          className={`w-32 h-28 overflow-hidden object-cover rounded`}
         />
+      ) : (
+        <div className="w-32 h-28 border-2 border-primary flex items-center justify-center rounded">
+          preview
+        </div>
       )}
     </>
   );
