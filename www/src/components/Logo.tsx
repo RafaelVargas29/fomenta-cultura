@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Images from "../assets/brand/logo.png";
-import ImageAlt from "../assets/brand/logo-alt.png";
+import Images from "../assets/images/brand/logo.png";
+import ImageAlt from "../assets/images/brand/logo-alt.png";
 
 interface LogoProps {
   alt?: boolean;

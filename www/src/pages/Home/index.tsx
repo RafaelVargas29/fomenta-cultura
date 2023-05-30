@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
-import { Header } from "../../features/LandingPage/Header";
-import Boxed from "../../layouts/Boxed";
+import Boxed from "../../templates/Boxed";
 import { FiLogIn } from "react-icons/fi";
 import { GoMegaphone } from "react-icons/go";
-import SocialImg from "../../assets/current_location.svg";
+import { Header } from "../../components/LandingPage/Header";
+import { Link } from "react-router-dom";
+
+import HeroImg from "../../assets/images/location.svg";
 
 export function Home() {
   return (
@@ -42,7 +43,7 @@ export function Home() {
               </div>
             </div>
             <div className="flex-1 hidden lg:block">
-              <img src={SocialImg} alt="" />
+              <img src={HeroImg} alt="" />
             </div>
           </div>
         </Boxed>

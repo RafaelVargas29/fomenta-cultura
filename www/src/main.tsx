@@ -4,13 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
-import { Dashboard } from "./pages/Dashboard";
-
-import "./styles/index.css";
-import { CreateActivity } from "./pages/Activities/CreateActivity";
-import { ListallActivity } from "./pages/Activities/ListallActivity";
-import { Events } from "./pages/Eventos";
-import { PrivateRoute } from "./layouts/PrivateRoute";
+import { Dashboard } from "./pages/Organizations/Dashboard";
+import { CreateActivity } from "./pages/Organizations/Activities/CreateActivity";
+import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
+import "./assets/styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -19,7 +16,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Route path="/" index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="eventos" element={<Events />} />
 
         <Route path="/">
           <Route path="/dashboard" element={<Dashboard />} />

@@ -4,7 +4,7 @@ import {
   BiCalendarCheck,
   BiCheckDouble
 } from "react-icons/bi";
-import { SummaryContainer } from "../../layouts/Dashborad/SummaryContainer";
+import { SummaryContainer } from "../../templates/SummaryContainer";
 import { SummaryCard } from "../SummaryCard";
 
 export function Summary() {

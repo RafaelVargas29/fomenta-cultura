@@ -118,47 +118,6 @@ button {
   .td {
     @apply bg-white border-t-4 text-sm p-2 leading-relaxed first:pl-4 last:pr-4;
   }
-
-  /* DropDown */
-  li {
-    float: left;
-  }
-
-  li a,
-  .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    z-index: 30;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  }
-
-  .dropdown-content a {
-    border-radius: 8px;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  /**/
 }
 /*
     https://github.com/tailwindlabs/tailwindcss/discussions/2394

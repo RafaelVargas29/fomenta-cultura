@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
-import { Asidebar } from "../features/Aside";
+
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Welcome } from "./Welcome";
 
 import dayjs from "dayjs";
 import ptBr from "dayjs/locale/pt-br";
 import { useToggle } from "../hooks/useToggle";
+import { Asidebar } from "../components/Aside";
 dayjs.locale(ptBr);
 
 interface ViewContainerProps {

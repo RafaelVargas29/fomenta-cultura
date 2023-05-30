@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import ViewContainer from "../../layouts/ViewContainer";
+import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { api } from "../../lib/axios/api";
-import MediaPicker from "../../components/MediaPicker";
+import { api } from "../../../lib/axios/api";
+import MediaPicker from "../../../components/MediaPicker";
 
 export function CreateActivity() {
   const [form, setForm] = useState({

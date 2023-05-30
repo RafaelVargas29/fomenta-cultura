@@ -1,5 +1,5 @@
 import { BiPlusCircle } from "react-icons/bi";
-import ViewContainer from "../../layouts/ViewContainer";
+import ViewContainer from "../../templates/ViewContainer";
 import { Summary } from "../../components/Dashboard/Summary";
 import { Link } from "react-router-dom";
 
