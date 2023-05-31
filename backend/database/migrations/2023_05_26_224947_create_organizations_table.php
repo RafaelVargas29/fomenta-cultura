@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email_organization');
             $table->string('password_organization');
         });
+
+        // Relacionamento com a tabela address
+        Schema::table('organizations', function (Blueprint $table) {
+            $table->unsignedBigInteger('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+        });
     }
 
     /**
@@ -24,6 +30,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Removendo relacionamento com a tabela address
+        Schema::table('organizations', function (Blueprint $table) {
+            $table->dropForeign(['address_id']);
+            $table->dropColumn('address_id');
+        });
+
         Schema::dropIfExists('organizations');
     }
 };
