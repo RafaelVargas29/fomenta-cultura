@@ -93,7 +93,7 @@ button {
     @apply border-none outline-0 focus:ring-0;
   }
   .input {
-    @apply text-black  border border-zinc-200 w-full shadow-sm h-12 px-3 rounded;
+    @apply text-black  border border-zinc-200 bg-gray-200 w-full shadow-sm h-12 px-3 rounded;
   }
 
   /* sidebar */

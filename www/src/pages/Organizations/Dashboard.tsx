@@ -1,25 +1,13 @@
-import { BiPlusCircle } from "react-icons/bi";
 import ViewContainer from "../../templates/ViewContainer";
 import { Summary } from "../../components/Dashboard/Summary";
-import { Link } from "react-router-dom";
+import { SectionTop } from "../../components/SectionTop";
 
 export function Dashboard() {
   return (
     <ViewContainer>
       <Summary />
-
       <section className={`mt-16 overflow-auto h-[320px] w-full m-auto px-6`}>
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-medium">Histórico</h2>
-          <Link
-            to={"/activities/new"}
-            className="btn bg-hover flex items-center gap-[4px]"
-          >
-            <BiPlusCircle />
-            Criar Atividade
-          </Link>
-        </div>
-
+        <SectionTop title="Histórico" />
         <table className="w-full min-w-[600px] border-collapse ">
           <thead className={``}>
             <tr>

@@ -1,34 +1,59 @@
 {
-  "users": [
+  "users": [],
+  "activities": [
     {
-      "name": "admin",
-      "email": "admin@mail.com",
-      "password": "123456",
+      "title": "s",
+      "description": "s",
+      "status": "confirmado",
       "id": 1
     },
     {
-      "name": "teste",
-      "email": "teste@mail.com",
-      "password": "123456",
+      "title": "s",
+      "description": "w",
+      "status": "cancelado",
       "id": 2
-    }
-  ],
-  "activities": [
+    },
     {
-      "title": "a",
-      "description": "a",
-      "dateEvent": "2023-05-30",
-      "hoursEvent": "20:00",
+      "title": "d",
+      "description": "d",
+      "status": "cancelado",
+      "id": 3
+    },
+    {
+      "title": "s",
+      "description": "s",
+      "status": "confirmado",
+      "id": 4
+    },
+    {
+      "title": "s",
+      "description": "s",
+      "dateEvent": "2023-05-25",
+      "hoursEvent": "s",
       "status": "agendado",
-      "id": 1
+      "id": 5
+    },
+    {
+      "title": "d",
+      "description": "d",
+      "status": "cancelado",
+      "id": 6
+    },
+    {
+      "title": "",
+      "description": "",
+      "dateEvent": "",
+      "hoursEvent": "",
+      "status": "agendado",
+      "id": 7
     },
     {
       "title": "teste",
-      "description": "teste",
-      "dateEvent": "1000-01-01",
-      "hoursEvent": "3030",
-      "status": "agendado",
-      "id": 2
+      "description": "teste2",
+      "status": "cancelado",
+      "dateEvent": "0001-01-01",
+      "hoursEvent": "0000",
+      "id": 8
     }
   ]
 }

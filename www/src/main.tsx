@@ -7,6 +7,7 @@ import { Register } from "./pages/Auth/Register";
 import { Dashboard } from "./pages/Organizations/Dashboard";
 import { CreateActivity } from "./pages/Organizations/Activities/CreateActivity";
 import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
+import { EditActivity } from "./pages/Organizations/Activities/EditActivity";
 import "./assets/styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -22,7 +23,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Route path="/activities">
             <Route path="new" element={<CreateActivity />} />
             <Route path="all" element={<ListallActivity />} />
-            <Route path="edit/:id" element={<div>esditar</div>} />
+            <Route path="edit/:id" element={<EditActivity />} />
           </Route>
         </Route>
       </Routes>

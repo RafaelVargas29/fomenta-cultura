@@ -1,15 +1,14 @@
 /* eslint-disable prefer-const */
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { api } from "../../../libs/axios/api";
 import MediaPicker from "../../../components/MediaPicker";
-
-import * as firebase from "../../../services/firebase";
-import { ImageActivities } from "../../../@types/ImageActivities";
+import { createActivity } from "../../../business/Activities/Create";
 
 export function CreateActivity() {
+  const navigate = useNavigate();
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const [form, setForm] = useState({
     title: {
       hasChanged: false,
@@ -65,37 +64,11 @@ export function CreateActivity() {
     });
   }
   async function handleCreateActivity(event: FormEvent<HTMLFormElement>) {
-    /**
-     * Salva as informação
-     * 1 - stop do form
-     * 2 - pega a imagem e fazer upload dela no firebase
-     * 3 - pega a referencia da imagem e adicionar no objeto
-     * 4 - enviar dados para o backend
-     * 5 - se tudo tiver certo enviar mensagem de sucesso para o usuario
-     * 6 - redirecionar usuario para pagina de atividades
-     */
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const fileToUpload = formData.get("coverUrl") as File;
-    console.log(fileToUpload);
-    let imageURL = "";
-    if (fileToUpload) {
-      let result: any = await firebase.insert(fileToUpload);
-
-      console.log(result);
-      imageURL = result.url;
-    }
-    const information = {
-      title: formData.get("title"),
-      description: formData.get("description"),
-      dateEvent: formData.get("dateEvent"),
-      hoursEvent: formData.get("hoursEvent"),
-      status: "agendado",
-      imageURL
-    };
-    const result = await api.post("activities", information);
-    console.log(result);
-
+    setIsSubmiting(true);
+    await createActivity(formData);
+    setIsSubmiting(false);
     setForm({
       title: {
         hasChanged: false,
@@ -114,17 +87,20 @@ export function CreateActivity() {
         value: ""
       }
     });
+
+    navigate("/activities/all");
   }
 
   return (
     <ViewContainer>
-      <Link
-        to={"/dashboard"}
-        className="text-primary flex items-center font-bold mt-3 ml-4 hover:text-primary/70"
+      <span
+        className=" text-primary/60 flex items-center font-bold mt-3 ml-4 cursor-pointer hover:text-primary"
+        onClick={() => navigate(-1)}
+        title="voltar"
       >
-        <BiLeftArrowAlt className="icon" />
-        <span>Voltar ao início</span>
-      </Link>
+        <BiLeftArrowAlt className="icon w-8 h-8" />
+      </span>
+
       <form
         onSubmit={(e) => handleCreateActivity(e)}
         className="p-8 max-w-[730px] bg-white flex flex-col rounded-lg m-auto"
@@ -203,7 +179,8 @@ export function CreateActivity() {
               !form.title.value ||
               !form.description.value ||
               !form.dateEvent.value ||
-              !form.hoursEvent.value
+              !form.hoursEvent.value ||
+              isSubmiting
             }
             className="text-white w-36 flex items-center gap-2 btn bg-success disabled:bg-primary/50 disabled:cursor-not-allowed "
           >
