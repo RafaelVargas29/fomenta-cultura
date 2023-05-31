@@ -21,6 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', function(Request $request) {
+    if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        $user = Auth::user();
+        $token = $user->createToken('JWT');
+        return response()->json($token->plainTextToken, 200);
+    }
+
+    return response()->json('Usuário Inválido', 401);
+});
+
 Route::resource('activity', ActivityController::class);
 Route::resource('organization', OrganizationController::class);
 Route::resource('category', CategoryController::class);
