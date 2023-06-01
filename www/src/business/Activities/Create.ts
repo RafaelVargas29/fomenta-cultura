@@ -1,4 +1,4 @@
-import { Activity } from "../../@types/Activity";
+import { Activity } from "../../models/Activity";
 import { CreateActivityService } from "../../services/Activities/CreateActivityService";
 import { uploadImageInStorageFirebase } from "../../utils/uploadImageFirebase";
 

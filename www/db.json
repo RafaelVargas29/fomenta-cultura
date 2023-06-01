@@ -1,59 +1,75 @@
 {
-  "users": [],
+  "users": [
+    {
+      "name": "admin",
+      "email": "admin@mail.com",
+      "password": "123456",
+      "id": 1
+    }
+  ],
   "activities": [
     {
-      "title": "s",
-      "description": "s",
-      "status": "confirmado",
+      "title": "Atividade 1",
+      "description": "Descrição da atividade 1",
+      "status": "cancelado",
+      "dateEvent": "2020-04-03",
+      "hoursEvent": "0000",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2F7e0d0cc9-f574-4699-a308-74af4012a999?alt=media&token=dc83c945-1b14-41f0-87f0-4e3963a97976",
       "id": 1
     },
     {
-      "title": "s",
-      "description": "w",
-      "status": "cancelado",
+      "title": "Atividade 2",
+      "description": "Descrição da atividade 2",
+      "dateEvent": "2023-06-01",
+      "hoursEvent": "10:00",
+      "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2F7e2d9856-60a9-4339-88b7-d19039135a96?alt=media&token=7f05433d-2ee4-42c2-87e3-8de3af8909cc",
       "id": 2
     },
     {
-      "title": "d",
-      "description": "d",
-      "status": "cancelado",
+      "title": "Atividade 3",
+      "description": "Descrição da atividade 3",
+      "dateEvent": "2023-06-03",
+      "hoursEvent": "15:00",
+      "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2Fa6bec9b7-7320-4ba6-b743-19289439d0a6?alt=media&token=0af85812-43dc-4dc0-ad9d-1ff9f90dae88",
       "id": 3
     },
     {
-      "title": "s",
-      "description": "s",
-      "status": "confirmado",
+      "title": "Atividade 4",
+      "description": "Descrição da atividade 4",
+      "dateEvent": "2023-06-04",
+      "hoursEvent": "10:00",
+      "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2Fefcaf203-2aa0-4e52-8cb7-11f566807a50?alt=media&token=4ec6caec-72c3-4deb-b3bd-2b1929eca6f5",
       "id": 4
     },
     {
-      "title": "s",
-      "description": "s",
-      "dateEvent": "2023-05-25",
-      "hoursEvent": "s",
+      "title": "Atividade 5",
+      "description": "teste rafa",
+      "dateEvent": "2023-06-09",
+      "hoursEvent": "18:00",
       "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2F8425b740-63d2-4932-a2b8-969fd88773e1?alt=media&token=ff4198af-8c23-497b-a5b0-3e5ac2a7dfe4",
       "id": 5
     },
     {
-      "title": "d",
-      "description": "d",
-      "status": "cancelado",
+      "title": "Atividade 6",
+      "description": " <td>                       {dateFormatter.format(new Date(activity.dateEvent))}                     </td>",
+      "dateEvent": "2023-05-17",
+      "hoursEvent": "09:00",
+      "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2Fd1a12b46-9795-467c-904e-dd27b6494bcb?alt=media&token=ee16509e-babc-41c4-870e-33cbb572dc0c",
       "id": 6
     },
     {
-      "title": "",
-      "description": "",
-      "dateEvent": "",
-      "hoursEvent": "",
+      "title": "Atividade TESTE",
+      "description": "add",
+      "dateEvent": "2023-06-08",
+      "hoursEvent": "00:00",
       "status": "agendado",
+      "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2Fd825f6f4-ac06-4f4e-8614-c48cf17d33c9?alt=media&token=4fa4a3f8-73fb-4553-b87b-e77146bfb0ae",
       "id": 7
-    },
-    {
-      "title": "teste",
-      "description": "teste2",
-      "status": "cancelado",
-      "dateEvent": "0001-01-01",
-      "hoursEvent": "0000",
-      "id": 8
     }
   ]
 }

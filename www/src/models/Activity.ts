@@ -4,6 +4,7 @@ export type Activity = {
   description: string;
   dateEvent: string;
   hoursEvent: string;
-  status: string;
+  status: "agendado" | "confirmado" | "concluido" | "cancelado";
   image?: string;
+  createdAt: string;
 };

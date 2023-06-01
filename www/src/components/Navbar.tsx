@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BiHome, BiPlusCircle } from "react-icons/bi";
+import { BiHome, BiPlusCircle, BiUser } from "react-icons/bi";
 import { GiBugleCall } from "react-icons/gi";
 
 export function Navbar() {
@@ -22,6 +22,10 @@ export function Navbar() {
       <Link to={"/activities/all"} title="Atividade" className="sidebar-link">
         <GiBugleCall className="icon" />
         <span className="sidebar-text">Atividades</span>
+      </Link>
+      <Link to={"/activities/all"} title="Profile" className="sidebar-link">
+        <BiUser className="icon" />
+        <span className="sidebar-text">Profile</span>
       </Link>
     </nav>
   );

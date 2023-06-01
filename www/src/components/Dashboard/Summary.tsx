@@ -6,8 +6,27 @@ import {
 } from "react-icons/bi";
 import { SummaryContainer } from "../../templates/SummaryContainer";
 import { SummaryCard } from "../SummaryCard";
+import { useContextSelector } from "use-context-selector";
+import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 
 export function Summary() {
+  const actividades = useContextSelector(ActivitiesContext, (context) => {
+    return context.activities;
+  });
+
+  const agendados = actividades.filter((ac) =>
+    ac["status"].includes("agendado")
+  );
+  const confirmados = actividades.filter((ac) =>
+    ac["status"].includes("confirmado")
+  );
+  const concluidos = actividades.filter((ac) =>
+    ac["status"].includes("concluido")
+  );
+  const cancelados = actividades.filter((ac) =>
+    ac["status"].includes("cancelado")
+  );
+
   return (
     <SummaryContainer className="w-full m-auto px-6 py-8 ">
       <h2 className="text-xl font-bold mb-4">Suas Atividades</h2>
@@ -17,7 +36,7 @@ export function Summary() {
             <span className="text-xl font-medium">Agendado</span>
             <BiCalendarAlt className="icon" />
           </header>
-          <strong className="block mt-4 text-4xl">2</strong>
+          <strong className="block mt-4 text-4xl">{agendados.length}</strong>
         </SummaryCard>
 
         <SummaryCard
@@ -29,7 +48,7 @@ export function Summary() {
             <span className="text-xl font-medium">Confirmado</span>
             <BiCalendarCheck className="icon" />
           </header>
-          <strong className="block mt-4 text-4xl">2</strong>
+          <strong className="block mt-4 text-4xl">{confirmados.length}</strong>
         </SummaryCard>
 
         <SummaryCard
@@ -41,7 +60,7 @@ export function Summary() {
             <span className="text-xl font-medium">Concluído</span>
             <BiCheckDouble className="icon" />
           </header>
-          <strong className="block mt-4 text-4xl">2</strong>
+          <strong className="block mt-4 text-4xl">{concluidos.length}</strong>
         </SummaryCard>
 
         <SummaryCard
@@ -53,7 +72,7 @@ export function Summary() {
             <span className="text-xl font-medium">Cancelado</span>
             <BiBlock className="icon" />
           </header>
-          <strong className="block mt-4 text-4xl">30</strong>
+          <strong className="block mt-4 text-4xl">{cancelados.length}</strong>
         </SummaryCard>
       </nav>
     </SummaryContainer>

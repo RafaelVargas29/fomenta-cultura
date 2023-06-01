@@ -32,7 +32,7 @@ export function Home() {
                   <strong>Cadastrar Atividade</strong>
                 </Link>
                 <Link
-                  to="/eventos"
+                  to="/feed"
                   className="bg-secondary flex items-center gap-3 btn"
                 >
                   <span>
