@@ -1,5 +1,5 @@
 export type Organization = {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;
@@ -7,10 +7,10 @@ export type Organization = {
 };
 
 export type Address = {
-  id: number;
   cep: string;
   logradouro: string;
-  complemento: string;
+  complemento?: string;
+  numero?: string;
   bairro: string;
   localidade: string;
   uf: string;

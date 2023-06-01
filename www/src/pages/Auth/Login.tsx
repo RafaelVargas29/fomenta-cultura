@@ -68,22 +68,19 @@ export function Login() {
 
   return (
     <main
-      className={`min-h-screen  flex flex-col gap-9 items-center justify-center px-4 sm:px-0`}
+      className={`min-h-screen flex-column gap-9 flex-center bg-solid px-4 sm:px-0`}
     >
       <div
-        className={`max-w-xs bg-secondary/80 text-white w-full flex flex-col gap-4 shadow-2xl rounded-md p-8 lg:max-w-lg`}
+        className={`max-w-xs bg-secondary/80 text-white w-full flex-column gap-4 shadow-2xl rounded-md p-8 lg:max-w-lg`}
       >
         <h2 className="text-center mb-3 text-xl font-semibold ">
           Realize seu login na plataforma
         </h2>
-        <form
-          onSubmit={(e) => handleLogin(e)}
-          className={`flex flex-col gap-4`}
-        >
-          <div className="flex flex-col gap-1">
+        <form onSubmit={(e) => handleLogin(e)} className={`flex-column gap-4`}>
+          <div className="flex-column gap-1">
             <label htmlFor="email">E-mail</label>
             <input
-              className="input input-clean"
+              className="input input-clean focus:bg-primary/75"
               type="email"
               placeholder="E-mail"
               value={form.email.value}
@@ -110,11 +107,11 @@ export function Login() {
               </span>
             )}
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex-column gap-1">
             <label htmlFor="password">Senha</label>
             <div className="relative w-full">
               <input
-                className="input input-clean"
+                className="input input-clean focus:bg-primary/75"
                 type={"password"}
                 placeholder="Senha"
                 value={form.password.value}

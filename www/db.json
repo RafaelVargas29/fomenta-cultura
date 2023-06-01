@@ -4,6 +4,15 @@
       "name": "admin",
       "email": "admin@mail.com",
       "password": "123456",
+      "address": {
+        "cep": "23010-010",
+        "logradouro": "Rua Sauna",
+        "bairro": "Senador Camará",
+        "localidade": "Rio de Janeiro",
+        "uf": "RJ",
+        "number": "38",
+        "complement": "lote 04"
+      },
       "id": 1
     }
   ],

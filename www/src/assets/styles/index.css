@@ -22,16 +22,31 @@ button {
 }
 
 @layer components {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .flex-column {
+    @apply flex flex-col;
+  }
+  .flex-start {
+    @apply flex justify-start items-start;
+  }
+  .flex-end {
+    @apply flex justify-end items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
   .fixed-element {
     @apply fixed top-0 left-0 right-0 z-10;
   }
   .icon {
-    @apply flex-shrink-0 h-6 w-6;
+    @apply flex-shrink-0 h-5 w-5;
   }
   .text-invisible {
     @apply invisible h-0 w-0 hidden md:block md:visible md:h-auto md:w-auto text-sm;
   }
-  .bg-gradient-alt {
+  .bg-gradient {
     color: #fff;
     background: rgb(244, 189, 79);
     background: -moz-linear-gradient(
@@ -54,35 +69,19 @@ button {
     );
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f4bd4f",endColorstr="#f5590b",GradientType=1);
   }
-  .bg-gradient {
-    color: #fff;
-    background: rgb(245, 89, 11);
-    background: -moz-linear-gradient(
-      180deg,
-      rgba(245, 89, 11, 1) 50%,
-      rgba(245, 132, 11, 1) 70%,
-      rgba(244, 189, 79, 1) 100%
-    );
-    background: -webkit-linear-gradient(
-      180deg,
-      rgba(245, 89, 11, 1) 50%,
-      rgba(245, 132, 11, 1) 70%,
-      rgba(244, 189, 79, 1) 100%
-    );
-    background: linear-gradient(
-      180deg,
-      rgba(245, 89, 11, 1) 50%,
-      rgba(245, 132, 11, 1) 70%,
-      rgba(244, 189, 79, 1) 100%
-    );
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f5590b",endColorstr="#f4bd4f",GradientType=1);
-  }
-  .btn {
-    @apply px-4 py-3 rounded-lg capitalize cursor-pointer shadow-lg flex items-center justify-center hover:shadow-none;
+  .bg-solid {
+    background-color: #fef5e7;
   }
   .bg-hover {
     @apply bg-secondary/70 text-white hover:bg-secondary transition-all duration-300;
   }
+  .btn {
+    @apply px-4 py-3 rounded-lg capitalize cursor-pointer shadow-lg flex-center gap-3 duration-300 transition-all hover:shadow-none;
+  }
+  .btn-outline {
+    @apply border border-zinc-50 hover:bg-hover hover:border-transparent;
+  }
+
   .btn-fill {
     @apply font-semibold md:bg-gradient md:text-white md:p-4 md:rounded-full md:w-32 !important;
   }
@@ -93,7 +92,7 @@ button {
     @apply border-none outline-0 focus:ring-0;
   }
   .input {
-    @apply text-black  border border-zinc-200 bg-gray-200 w-full shadow-sm h-12 px-3 rounded;
+    @apply text-black  border border-zinc-100 bg-[#f7e9d1] w-full shadow-sm h-12 px-3 rounded placeholder:text-zinc-500 focus:bg-primary/75 disabled:bg-zinc-300 disabled:border-transparent disabled:cursor-not-allowed;
   }
 
   /* sidebar */
