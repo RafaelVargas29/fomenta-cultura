@@ -4,7 +4,7 @@ export function useToggle(stateInitial = false) {
   const [open, setOpen] = useState<boolean>(stateInitial);
 
   function handleToggle() {
-    setOpen(!open);
+    setOpen((prev) => !prev);
   }
 
   return { open, handleToggle };

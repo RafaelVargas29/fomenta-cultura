@@ -292,26 +292,30 @@ export function Register() {
             </label>
           </fieldset>
 
-          <button
-            type="submit"
-            data-testid="login-button"
-            disabled={
-              !isEmailValid(form.email.value) ||
-              !form.password.value ||
-              !form.name.value
-            }
-            className="bg-green-500 rounded font-semibold h-10 text-white hover:bg-green-600 transition-colors disabled:bg-green-500/40 disabled:text-white/40 disabled:cursor-not-allowed"
-          >
-            Inscrever-se
-          </button>
+          <div className="mt-8 w-full px-3">
+            <button
+              type="submit"
+              data-testid="login-button"
+              disabled={
+                !isEmailValid(form.email.value) ||
+                !form.password.value ||
+                !form.name.value
+              }
+              className="bg-green-500 w-full rounded font-semibold h-10 text-white hover:bg-green-600 transition-colors disabled:bg-green-500/40 disabled:text-white/40 disabled:cursor-not-allowed"
+            >
+              Inscrever-se
+            </button>
+          </div>
 
-          <div className="border-t-2 border-zinc-950 mt-4 pt-4 text-sm sm:text-base">
-            <p>
-              Você já tem conta?{" "}
-              <Link to={"/login"} className="text-blue-50 hover:underline">
-                Faça login
-              </Link>
-            </p>
+          <div className="px-3 w-full ">
+            <div className="border-t-2 border-zinc-950 px-3 mt-4 mb-5 pt-4 text-sm sm:text-base">
+              <p>
+                Você já tem conta?{" "}
+                <Link to={"/login"} className="text-blue-50 underline">
+                  Faça login
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>

@@ -14,11 +14,14 @@ export function Home() {
         <Boxed id="hero" className="bg-gradient h-[87vh] flex-center">
           <div className="flex-between">
             <section className="max-w-[560px]">
-              <h1 className="text-[36px]  md:text-[54px] font-bold">
-                Sua plataforma de eventos culturais
+              <h1 className="text-[36px]  md:text-[72px] font-bold">
+                Fomenta Cultura
               </h1>
-              <p className="text-base md:text-2xl mt-6 font-bold">
-                Ajudamos pessoas a encontrar pontos de eventos culturais de
+              <h2 className="text-[18px]  md:text-[27px]">
+                Sua plataforma de eventos culturais
+              </h2>
+              <p className="text-base md:text-2xl mt-6 font-normal">
+                Ajudamos pessoas a encontrar atividades e eventos culturais de
                 forma eficiente.
               </p>
 
