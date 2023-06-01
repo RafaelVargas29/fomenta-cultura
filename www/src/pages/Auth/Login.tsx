@@ -80,7 +80,7 @@ export function Login() {
           <div className="flex-column gap-1">
             <label htmlFor="email">E-mail</label>
             <input
-              className="input input-clean focus:bg-primary/75"
+              className="input input-clean"
               type="email"
               placeholder="E-mail"
               value={form.email.value}
@@ -111,7 +111,7 @@ export function Login() {
             <label htmlFor="password">Senha</label>
             <div className="relative w-full">
               <input
-                className="input input-clean focus:bg-primary/75"
+                className="input input-clean"
                 type={"password"}
                 placeholder="Senha"
                 value={form.password.value}

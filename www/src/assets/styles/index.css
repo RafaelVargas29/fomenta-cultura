@@ -92,7 +92,7 @@ button {
     @apply border-none outline-0 focus:ring-0;
   }
   .input {
-    @apply text-black  border border-zinc-100 bg-[#f7e9d1] w-full shadow-sm h-12 px-3 rounded placeholder:text-zinc-500 focus:bg-primary/75 disabled:bg-zinc-300 disabled:border-transparent disabled:cursor-not-allowed;
+    @apply text-black  border border-zinc-100 bg-[#f7e9d1] w-full shadow-sm h-12 px-3 rounded placeholder:text-zinc-500 focus:bg-primary/60 disabled:bg-zinc-300 disabled:border-transparent disabled:cursor-not-allowed;
   }
 
   /* sidebar */
