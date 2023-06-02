@@ -108,7 +108,7 @@ button {
   }
 
   .sidebar-text {
-    @apply h-0 w-0 invisible lg:visible lg:h-full lg:w-full font-medium;
+    @apply h-0 w-0 invisible lg:visible lg:h-full lg:w-full font-semibold;
   }
 
   .th {
@@ -116,6 +116,12 @@ button {
   }
   .td {
     @apply bg-white border-t-4 text-sm p-2 leading-relaxed first:pl-4 last:pr-4;
+  }
+  .subtitle {
+    @apply text-xl font-bold leading-relaxed;
+  }
+  .grid-performance {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3;
   }
 }
 /*

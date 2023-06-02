@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { createContext } from "use-context-selector";
@@ -18,6 +19,7 @@ interface ActivityContextType {
   fetchActivities: (query?: string) => Promise<void>;
   createActivity: (data: CreateActivityInput) => Promise<void>;
   updateActivity: (id: number, data: any) => Promise<void>;
+  getActivityStatus: (paramToFilter: string) => Activity[];
 }
 
 interface ActivitiesProviderProps {
@@ -38,7 +40,6 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
         q: query
       }
     });
-
     setActivities(response.data);
   }, []);
 
@@ -65,9 +66,14 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
       image,
       createdAt: new Date()
     });
-
     setActivities((state) => [response.data, ...state]);
   }, []);
+
+  const getActivityStatus = (paramToFilter: string) => {
+    return activities.filter((activity) =>
+      activity["status"].includes(paramToFilter)
+    );
+  };
 
   useEffect(() => {
     fetchActivities();
@@ -79,7 +85,8 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
         activities,
         fetchActivities,
         updateActivity,
-        createActivity
+        createActivity,
+        getActivityStatus
       }}
     >
       {children}

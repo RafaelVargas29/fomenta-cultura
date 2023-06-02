@@ -29,9 +29,9 @@
     {
       "title": "Atividade 2",
       "description": "Descrição da atividade 2",
+      "status": "confirmado",
       "dateEvent": "2023-06-01",
       "hoursEvent": "10:00",
-      "status": "agendado",
       "image": "https://firebasestorage.googleapis.com/v0/b/fomenta-cultura-gallery.appspot.com/o/images%2F7e2d9856-60a9-4339-88b7-d19039135a96?alt=media&token=7f05433d-2ee4-42c2-87e3-8de3af8909cc",
       "id": 2
     },
