@@ -1,10 +1,10 @@
 /* eslint-disable prefer-const */
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
-import { ChangeEvent, FormEvent, useState } from "react";
 import MediaPicker from "../../../components/MediaPicker";
-import { createActivity } from "../../../business/Activities/Create";
+import { create } from "../../../business/Activities/Create";
 
 export function CreateActivity() {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export function CreateActivity() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     setIsSubmiting(true);
-    await createActivity(formData);
+    await create(formData);
     setIsSubmiting(false);
     setForm({
       title: {
@@ -149,10 +149,9 @@ export function CreateActivity() {
             <label htmlFor="hoursEvent" className="flex-1 flex flex-col mb-6">
               Hora:
               <input
-                type="text"
+                type="time"
                 name="hoursEvent"
                 id="hoursEvent"
-                placeholder="00:00"
                 className="input input-clean bg-gray-200"
                 value={form.hoursEvent.value}
                 onChange={(event) => handleHoursEventChange(event)}
@@ -166,7 +165,7 @@ export function CreateActivity() {
               className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
             >
               <BiCamera className={`icon`} />
-              Anexar imagem
+              Adicionar um flyer
             </label>
             <MediaPicker />
           </div>

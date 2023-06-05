@@ -1,5 +1,5 @@
-import { Activity } from "../../@types/Activity";
-import { api } from "../../libs/axios/api";
+import { api } from "../../config/axios";
+import { Activity } from "../../models/Activity";
 
 export async function getAllActivities() {
   const preResult = await api.get("activities");

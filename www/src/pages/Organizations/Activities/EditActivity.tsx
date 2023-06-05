@@ -2,7 +2,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import { getByIdActivities } from "../../../business/Activities/GetById";
-import { Activity } from "../../../@types/Activity";
+import { Activity } from "../../../models/Activity";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { updateActivity } from "../../../business/Activities/Update";

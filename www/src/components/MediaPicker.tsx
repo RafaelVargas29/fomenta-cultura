@@ -1,15 +1,18 @@
-import { ChangeEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function MediaPicker() {
   const [preview, setPreview] = useState<string | null>(null);
+  const types = ["image/jpeg", "image/svg", "image/jpg", "image/png"];
 
-  function onFileSelected(event: ChangeEvent<HTMLInputElement>) {
-    const { files } = event.target;
-    if (!files) {
+  function onFileSelected(event: FormEvent<HTMLInputElement>) {
+    const files = event.currentTarget.files?.[0];
+
+    if (files && types.includes(files.type)) {
+      const previewURL = URL.createObjectURL(files);
+      setPreview(previewURL);
+    } else {
       return;
     }
-    const previewURL = URL.createObjectURL(files[0]);
-    setPreview(previewURL);
   }
 
   return (
@@ -18,7 +21,7 @@ export default function MediaPicker() {
         onChange={onFileSelected}
         type="file"
         id="media"
-        name="coverUrl"
+        name="flyer"
         accept="image/*"
         className={`h-0 w-0 invisible`}
       />

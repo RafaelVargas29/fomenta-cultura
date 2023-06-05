@@ -1,11 +1,22 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { api } from "../../libs/axios/api";
+import { useContextSelector } from "use-context-selector";
+import { AuthContext } from "../../store/context/AuthContext";
 
 export function Login() {
-  const navigate = useNavigate();
+  const { login } = useContextSelector(AuthContext, (context) => {
+    return {
+      login: context.login
+    };
+  });
+  const navgative = useNavigate();
+  const [error, setError] = useState(false);
 
   const [form, setForm] = useState({
+    name: {
+      hasChanged: false,
+      value: ""
+    },
     email: {
       hasChanged: false,
       value: ""
@@ -15,7 +26,6 @@ export function Login() {
       value: ""
     }
   });
-
   const isEmailValid = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
   };
@@ -38,31 +48,19 @@ export function Login() {
       }
     });
   }
+
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const userDatas = {
+    const data = {
       email: form.email.value,
       password: form.password.value
     };
-    /* faz chamada para api fake e retorna todos os usuarios */
-    const preResult = await api.get("users");
-    const result = preResult.data;
-
-    /* faz filtro e procura o usuario q verio do login. retorna um array */
-    const userValidated = result.filter(
-      (u: { email: string }) => u.email === userDatas.email
-    );
-
-    if (userValidated.length > 0) {
-      navigate(`/dashboard`);
-
-      // const user = userValidated[0].email;
-      // localStorage.setItem("user", JSON.stringify(user));
-      // window.location.href = "/";
-    }
-    /* caso o usuario não seja encontrado */
-    if (userValidated.length <= 0) {
-      alert("Usuário não encontrado");
+    const response = await login(data.email, data.password);
+    console.log("handle Login", response);
+    if (!response.message) {
+      navgative("/dashboard");
+    } else {
+      setError(true);
     }
   }
 
@@ -76,78 +74,97 @@ export function Login() {
         <h2 className="text-center mb-3 text-xl font-semibold ">
           Realize seu login na plataforma
         </h2>
-        <form onSubmit={(e) => handleLogin(e)} className={`flex-column gap-4`}>
-          <div className="flex-column gap-1">
-            <label htmlFor="email">E-mail</label>
-            <input
-              className="input input-clean"
-              type="email"
-              placeholder="E-mail"
-              value={form.email.value}
-              onChange={(event) => handleEmailChange(event)}
-              data-testid="email"
-            />
-            {form.email.hasChanged && !form.email.value ? (
-              <span
-                data-testid="email-required"
-                className="text-sm font-medium leading-relaxed pl-1 text-amber-500"
-              >
-                Email é obrigatório
-              </span>
-            ) : form.email.hasChanged && !isEmailValid(form.email.value) ? (
-              <span
-                data-testid="email-invalid"
-                className="text-sm font-medium leading-relaxed pl-1 text-amber-500"
-              >
-                Email é inválido
-              </span>
-            ) : (
-              <span className="text-sm font-medium leading-relaxed pl-1">
-                Digite seu e-mail{" "}
-              </span>
-            )}
-          </div>
-          <div className="flex-column gap-1">
-            <label htmlFor="password">Senha</label>
-            <div className="relative w-full">
+        <form onSubmit={handleLogin}>
+          <fieldset className="w-full p-3 space-y-3">
+            <legend className="text-xl font-semibold" />
+
+            <label htmlFor="email" className="flex-column gap-px">
+              E-mail:
               <input
                 className="input input-clean"
-                type={"password"}
+                type="email"
+                placeholder="exemplo@mail.com"
+                value={form.email.value}
+                onChange={(event) => handleEmailChange(event)}
+                data-testid="email"
+              />
+              {form.email.hasChanged && !form.email.value ? (
+                <span
+                  data-testid="email-required"
+                  className="text-sm font-semibold leading-relaxed  text-amber-500"
+                >
+                  Email é obrigatório
+                </span>
+              ) : form.email.hasChanged && !isEmailValid(form.email.value) ? (
+                <span
+                  data-testid="email-invalid"
+                  className="text-sm font-semibold leading-relaxed  text-amber-500"
+                >
+                  Email é inválido
+                </span>
+              ) : (
+                <span
+                  data-testid="name-required"
+                  className="text-sm font-semibold leading-relaxed invisible"
+                >
+                  -
+                </span>
+              )}
+            </label>
+
+            <label htmlFor="password" className="flex-column gap-px">
+              Senha:
+              <input
+                className="input input-clean"
+                type="password"
                 placeholder="Senha"
                 value={form.password.value}
                 onChange={(event) => handlePasswordChange(event)}
                 data-testid="password"
               />
-            </div>
-            {form.password.hasChanged && !form.password.value ? (
-              <span
-                data-testid="password-required"
-                className="text-sm font-medium leading-relaxed pl-1 text-amber-500"
-              >
-                Senha é obrigatória
-              </span>
-            ) : (
-              <span className="text-sm font-medium leading-relaxed pl-1">
-                Digite sua senha
-              </span>
-            )}
-          </div>
-          <button
-            type="submit"
-            data-testid="login-button"
-            disabled={!isEmailValid(form.email.value) || !form.password.value}
-            className="bg-green-500 rounded font-semibold h-10 text-white hover:bg-green-600 transition-colors disabled:bg-green-500/40 disabled:text-white/40 disabled:cursor-not-allowed"
-          >
-            Entrar
-          </button>
+              {form.password.hasChanged && !form.password.value ? (
+                <span
+                  data-testid="password-required"
+                  className="text-sm font-semibold leading-relaxed  text-amber-500"
+                >
+                  Senha é obrigatória
+                </span>
+              ) : form.password.hasChanged && form.password.value.length < 6 ? (
+                <span className="text-sm font-semibold leading-relaxed  text-amber-500">
+                  A senha precisa ter mínimo de 6 caracteres
+                </span>
+              ) : (
+                <span
+                  data-testid="name-required"
+                  className="text-sm font-semibold leading-relaxed invisible"
+                >
+                  -
+                </span>
+              )}
+            </label>
+          </fieldset>
 
-          <div className="border-t-2 border-zinc-950 mt-4 pt-4 text-sm sm:text-base">
-            <p>
-              Não tem uma conta?{" "}
-              <Link to={"/register"} className="text-blue-50 underline">
-                Cadastre-se
-              </Link>
-            </p>
+          <div className="w-full px-7">
+            <button
+              type="submit"
+              data-testid="login-button"
+              disabled={!isEmailValid(form.email.value) || !form.password.value}
+              className="bg-green-500 w-full rounded font-semibold h-10 text-white hover:bg-green-600 transition-colors disabled:bg-green-500/40 disabled:text-white/40 disabled:cursor-not-allowed"
+            >
+              Entrar
+            </button>
+            {error && <span>Email ou Senha incorreta</span>}
+          </div>
+
+          <div className="px-3 w-full ">
+            <div className="border-t-2 border-zinc-950 px-3 mt-4 mb-5 pt-4 text-sm sm:text-base">
+              <p>
+                Você já tem conta?{" "}
+                <Link to={"/register"} className="text-blue-50 underline">
+                  Cadastre-se
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>

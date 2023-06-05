@@ -1,6 +1,12 @@
 import { Activity } from "../../models/Activity";
-import { CreateActivityService } from "../../services/Activities/CreateActivityService";
+
 import { uploadImageInStorageFirebase } from "../../utils/uploadImageFirebase";
+
+export async function create(formData: FormData) {
+  //fazer upload da imagem
+  // pegar url da imagem
+  //salva as informação no banco
+}
 
 export async function createActivity(formData: FormData) {
   //chama e aguarda fazer upload no firebase

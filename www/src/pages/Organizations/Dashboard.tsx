@@ -1,13 +1,13 @@
-import { useContextSelector } from "use-context-selector";
-import ViewContainer from "../../templates/ViewContainer";
-import { ActivitiesContext } from "../../store/context/ActivitiesContext";
-import { Summary } from "../../components/Dashboard/Summary";
-import { Link } from "react-router-dom";
-import { BiCalendarAlt, BiPlusCircle } from "react-icons/bi";
-import { MdOutlineFilterAltOff } from "react-icons/md";
-import { dateFormatter } from "../../utils/formatter";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Activity } from "../../models/Activity";
+import ViewContainer from "../../templates/ViewContainer";
+import { Summary } from "../../components/Dashboard/Summary";
+import { MdOutlineFilterAltOff } from "react-icons/md";
+import { BiCalendarAlt, BiPlusCircle } from "react-icons/bi";
+import { dateFormatter } from "../../utils/formatter";
+import { useContextSelector } from "use-context-selector";
+import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 
 export function Dashboard() {
   const [keyWord, setKeyWord] = useState("");
@@ -21,17 +21,14 @@ export function Dashboard() {
       };
     }
   );
-
   const applyFilter = (title: string) => {
     setKeyWord(title);
     setStatusFilter(status(title));
   };
-
   return (
     <ViewContainer className="space-y-5 w-full m-auto px-6">
       <Summary action={applyFilter} />
-
-      <div className={`mb-5 flex-between`}>
+      <section id="buttons" className={`mb-5 flex-between`}>
         <h2 className="subtitle w-[500px]">
           Histórico{" "}
           {keyWord && (
@@ -41,8 +38,13 @@ export function Dashboard() {
 
         <div className="h-0 w-0 invisible sm:visible sm:h-full sm:w-full flex-end gap-4">
           {keyWord && (
-            <div className="btn bg-hover" onClick={() => setKeyWord("")}>
+            <div
+              className="btn bg-hover"
+              title="Limpar Fitlro"
+              onClick={() => setKeyWord("")}
+            >
               <MdOutlineFilterAltOff />
+              <span>Limpar Fitlro</span>
             </div>
           )}
           <Link to={"/activities/new"} className="btn bg-hover">
@@ -54,7 +56,7 @@ export function Dashboard() {
             Ver Todos
           </a>
         </div>
-      </div>
+      </section>
 
       <section className={`overflow-auto h-[160px] md:h-[320px] pb-6`}>
         <table className="w-full min-w-[600px] border-collapse">
@@ -78,7 +80,8 @@ export function Dashboard() {
                     <td className="td">{activity.status}</td>
                   </tr>
                 ))
-              : activities.map(
+              : activities.length > 0
+              ? activities.map(
                   (activity, index) =>
                     index < 5 && (
                       <tr key={activity.id}>
@@ -90,7 +93,8 @@ export function Dashboard() {
                         <td className="td">{activity.status}</td>
                       </tr>
                     )
-                )}
+                )
+              : ""}
           </tbody>
         </table>
       </section>

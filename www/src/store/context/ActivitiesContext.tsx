@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { createContext } from "use-context-selector";
-import { api } from "../../libs/axios";
+import { api } from "../../config/axios";
 import { Activity } from "../../models/Activity";
 
 interface CreateActivityInput {
