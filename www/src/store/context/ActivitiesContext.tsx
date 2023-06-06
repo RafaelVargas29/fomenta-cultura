@@ -52,13 +52,6 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
         });
       }
     }
-
-    // dateEvent: "2010-10-04";
-    // description: "att 3";
-    // hoursEvent: "16:01";
-    // image: "https://firebasestorage.googleapis.com/v0/b/tcc-fomenta-cultura.appspot.com/o/flyers%2F6e3b5c80-3bda-4685-9ce8-705ae5ec1114?alt=media&token=ae49c2c8-7c7b-4b47-a276-265279ae84b4";
-    // status: "";
-    // title: "atividade 3";
   };
 
   const saveImageInStorage = async (
