@@ -2,19 +2,40 @@ import { useContextSelector } from "use-context-selector";
 import ViewContainer from "../../../templates/ViewContainer";
 import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 import { EmptyActivities } from "../../../components/Activities/EmptyActivities";
-import { SectionTop } from "../../../components/SectionTop";
 import { Link } from "react-router-dom";
-import { dateFormatter } from "../../../utils/formatter";
+import { BiPlusCircle } from "react-icons/bi";
+import { useEffect } from "react";
+import { forma } from "../../../utils/formatter";
 
 export function ListallActivity() {
-  const activities = useContextSelector(ActivitiesContext, (context) => {
-    return context.activities;
-  });
+  const { activities, get } = useContextSelector(
+    ActivitiesContext,
+    (context) => {
+      return {
+        activities: context.activities,
+        get: context.getAll
+      };
+    }
+  );
+
+  useEffect(() => {
+    get();
+  }, [get]);
 
   return (
-    <ViewContainer>
-      <section className={`mt-12 overflow-auto  w-full m-auto px-6`}>
-        <SectionTop title="Atividades" />
+    <ViewContainer className={`mt-12 overflow-auto  w-full m-auto px-6`}>
+      <section className={`mb-6 flex items-center justify-between`}>
+        <h2 className="text-xl font-medium">Atividades</h2>
+        <Link
+          to={"/activities/new"}
+          className="btn bg-hover flex items-center gap-[4px]"
+        >
+          <BiPlusCircle />
+          Criar Atividade
+        </Link>
+      </section>
+
+      <section className="overflow-auto h-[160px] md:h-[500px] pb-6">
         {activities.length === 0 ? (
           <EmptyActivities />
         ) : (
@@ -35,10 +56,11 @@ export function ListallActivity() {
                 return (
                   <tr
                     key={activity.id}
-                    className={`td h-10 ${
-                      activity.status === "cancelado" &&
-                      "bg-gray-300 cursor-not-allowed"
-                    }`}
+                    className={`
+                    ${activity.status === "cancelado" && "td-cancelado"}
+                    ${activity.status === "concluido" && "td-concluido"}
+                    td
+                    `}
                   >
                     <td>
                       <div className="w-16 object-cover overflow-hidden">
@@ -48,18 +70,17 @@ export function ListallActivity() {
                     <td>{activity.title}</td>
                     <td>{activity.description}</td>
 
-                    <td>
-                      {dateFormatter.format(new Date(activity.dateEvent))}
-                    </td>
+                    <td>{forma(activity.dateEvent)}</td>
                     <td>{activity.hoursEvent}</td>
                     <td>{activity.status}</td>
                     <td>
-                      {activity.status === "cancelado" ? (
+                      {activity.status === "cancelado" ||
+                      activity.status === "concluido" ? (
                         ""
                       ) : (
                         <Link
                           to={`/activities/edit/${activity.id}`}
-                          className={`btn bg-gradient-alt font-bold w-20 `}
+                          className={`btn hover:bg-solid-alt hover:text-white font-bold w-20 `}
                         >
                           editar
                         </Link>

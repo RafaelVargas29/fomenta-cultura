@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
-import { getByIdActivities } from "../../../business/Activities/GetById";
-import { Activity } from "../../../models/Activity";
+import { Activity } from "../../../@types/Activity";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
-import { updateActivity } from "../../../business/Activities/Update";
+import { useContextSelector } from "use-context-selector";
+import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 
 export function EditActivity() {
   const navigate = useNavigate();
@@ -16,33 +16,36 @@ export function EditActivity() {
   const [description, setDescription] = useState("");
   const [dateEvent, setDateEvent] = useState("");
   const [hoursEvent, setHoursEvent] = useState("");
-  const [imageURL, setImageURL] = useState<string | undefined>("");
+  const [status, setStatus] = useState("");
+  // const [imageURL, setImageURL] = useState<string | undefined>("");
+
+  const { getById, update } = useContextSelector(
+    ActivitiesContext,
+    (context) => {
+      return {
+        getById: context.getById,
+        update: context.update
+      };
+    }
+  );
 
   async function handleEditActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
     setIsSubmiting(true);
-    const inf = {
-      title: formData.get("title"),
-      description: formData.get("description"),
-      status: formData.get("status"),
-      dateEvent,
-      hoursEvent,
-      image: imageURL
-    } as Activity;
-    await updateActivity(id, inf);
+    update(id!, new FormData(event.currentTarget));
     setIsSubmiting(false);
-    navigate("/activities/all");
+    navigate("/activities");
   }
 
   useEffect(() => {
     async function buscarDados() {
-      const result: Activity = await getByIdActivities(id);
+      const result: Activity = await getById(id);
       setTitle(result.title);
       setDescription(result.description);
       setDateEvent(result.dateEvent);
       setHoursEvent(result.hoursEvent);
-      setImageURL(result.image);
+      setStatus(result.status);
+      // setImageURL(result.image);
     }
     buscarDados();
   }, []);
@@ -70,7 +73,7 @@ export function EditActivity() {
               name="title"
               id="title"
               placeholder="Nome da Atividade"
-              className="input input-clean disabled:text-gray-400 disabled:cursor-not-allowed"
+              className="input input-clean"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               data-testid="title"
@@ -83,46 +86,42 @@ export function EditActivity() {
               name="description"
               id="description"
               placeholder="Descrição da atividade..."
-              className="input input-clean h-20 disabled:text-gray-400 disabled:cursor-not-allowed"
+              className="input input-clean"
               value={description}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
               data-testid="description"
             />
           </label>
-          {/* <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4">
             <label htmlFor="dateEvent" className="flex-1 flex flex-col mb-6">
               Data:
               <input
                 type="date"
                 name="dateEvent"
                 id="dateEvent"
-                className="input input-clean disabled:text-gray-400 disabled:cursor-not-allowed"
-                // value={form.dateEvent.value}
-                // onChange={(event) => handleDateEventChange(event)}
+                className="input input-clean"
+                value={dateEvent}
+                onChange={(event) => setDateEvent(event.target.value)}
                 data-testid="dateEvent"
-                disabled
               />
             </label>
             <label htmlFor="hoursEvent" className="flex-1 flex flex-col mb-6">
               Hora:
               <input
-                type="text"
+                type="time"
                 name="hoursEvent"
                 id="hoursEvent"
-                placeholder="00:00"
-                className="input input-clean disabled:text-gray-400 disabled:cursor-not-allowed"
-                // value={form.hoursEvent.value}
-                // onChange={(event) => handleHoursEventChange(event)}
+                className="input input-clean"
+                value={hoursEvent}
+                onChange={(event) => setHoursEvent(event.target.value)}
                 data-testid="hoursEvent"
               />
             </label>
-          </div> */}
+          </div>
           <label htmlFor="status" className="flex-1 flex flex-col mb-6">
             Status:
             <select name="status" id="status" className="input input-clean">
-              <option selected disabled>
-                Agendado
-              </option>
+              <option value={status}>{status}</option>
               <option value="confirmado">Confirmar</option>
               <option value="cancelado">Cancelar</option>
             </select>

@@ -1,25 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { createContext } from "use-context-selector";
-import { api } from "../../config/axios";
-import { Activity } from "../../models/Activity";
+import { Activity } from "../../@types/Activity";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 as createUUID } from "uuid";
+import { db, storage } from "../../config/firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc
+} from "firebase/firestore";
 
-interface CreateActivityInput {
-  title: string;
-  description: string;
-  dateEvent: string;
-  hoursEvent: string;
-  status: string;
-  image?: string;
-}
+const FIRESTORE_REFERENCE = "activities";
 
 interface ActivityContextType {
   activities: Activity[];
-  fetchActivities: (query?: string) => Promise<void>;
-  createActivity: (data: CreateActivityInput) => Promise<void>;
-  updateActivity: (id: number, data: any) => Promise<void>;
-  getActivityStatus: (paramToFilter: string) => Activity[];
+  getAll: () => void;
+  create: (data: any) => Promise<string>;
+  getById: (id?: string) => Promise<Activity>;
+  update: (id: string, data: any) => Promise<void>;
+  filterStatus: (paramToFilter: string) => Activity[];
 }
 
 interface ActivitiesProviderProps {
@@ -31,62 +36,109 @@ export const ActivitiesContext = createContext({} as ActivityContextType);
 export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
   const [activities, setActivities] = useState<Activity[]>([]);
 
-  /** getAll & getById or Name*/
-  const fetchActivities = useCallback(async (query?: string) => {
-    const response = await api.get("activities", {
-      params: {
-        _sort: "createdAt",
-        _order: "desc",
-        q: query
+  function compareInDays(currentDate: Date, date: Date): number {
+    return Math.ceil(
+      (date.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }
+
+  const checkActivitiesIsConcluid = async (data: any) => {
+    const obj = { ...data.data() };
+    const id = data.id;
+    if (obj.status !== "cancelado" && obj.status !== "concluido") {
+      if (compareInDays(new Date(), new Date(obj.dateEvent)) < 0) {
+        await updateDoc(doc(db, FIRESTORE_REFERENCE, id), {
+          status: "concluido"
+        });
       }
+    }
+
+    // dateEvent: "2010-10-04";
+    // description: "att 3";
+    // hoursEvent: "16:01";
+    // image: "https://firebasestorage.googleapis.com/v0/b/tcc-fomenta-cultura.appspot.com/o/flyers%2F6e3b5c80-3bda-4685-9ce8-705ae5ec1114?alt=media&token=ae49c2c8-7c7b-4b47-a276-265279ae84b4";
+    // status: "";
+    // title: "atividade 3";
+  };
+
+  const saveImageInStorage = async (
+    nameStorage: string,
+    file: any
+  ): Promise<string> => {
+    const namePhoto = createUUID();
+    const image = await uploadBytes(
+      ref(storage, `${nameStorage}/${namePhoto}`),
+      file
+    );
+    return await getDownloadURL(image.ref);
+  };
+
+  const create = async (data: any): Promise<string> => {
+    const colletionRef = collection(db, FIRESTORE_REFERENCE);
+    const informations = {
+      title: data.get("title"),
+      description: data.get("description"),
+      dateEvent: data.get("dateEvent"),
+      hoursEvent: data.get("hoursEvent"),
+      status: "agendado",
+      image: await saveImageInStorage("flyers", data.get("flyer"))
+    } as Activity;
+
+    const result = await addDoc(colletionRef, informations);
+    return result.id;
+  };
+
+  const getAll = useCallback(async () => {
+    const preview: any[] = [];
+    const querySnapshot = await getDocs(
+      query(collection(db, FIRESTORE_REFERENCE), orderBy("dateEvent", "desc"))
+    );
+
+    querySnapshot.forEach((doc) => {
+      checkActivitiesIsConcluid(doc);
     });
-    setActivities(response.data);
-  }, []);
-
-  /** update */
-  const updateActivity = useCallback(async (id: number, data: any) => {
-    console.log(`updateActivity`);
-    console.log(`param id: ${id}`);
-    console.log(`param data: ${data}`);
-  }, []);
-
-  /**Create */
-  const createActivity = useCallback(async (data: CreateActivityInput) => {
-    console.log("dentro do contexto dentro da função cria atividade");
-    /**
-     * fazer upload da imagem no firebase
-     */
-    const { dateEvent, description, hoursEvent, status, title, image } = data;
-    const response = await api.post("activities", {
-      dateEvent,
-      description,
-      hoursEvent,
-      status,
-      title,
-      image,
-      createdAt: new Date()
+    querySnapshot.forEach((doc) => {
+      preview.push({
+        ...doc.data(),
+        id: doc.id
+      });
     });
-    setActivities((state) => [response.data, ...state]);
+    setActivities(preview);
   }, []);
 
-  const getActivityStatus = (paramToFilter: string) => {
+  const getById = async (id?: string): Promise<Activity> => {
+    return activities.filter((activity) =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      activity["id"].includes(id!)
+    )[0];
+  };
+
+  const update = async (id: string, data: any): Promise<void> => {
+    const ref = doc(db, FIRESTORE_REFERENCE, id);
+    await updateDoc(ref, {
+      title: data.get("title"),
+      description: data.get("description"),
+      dateEvent: data.get("dateEvent"),
+      hoursEvent: data.get("hoursEvent"),
+      status: data.get("status")
+    });
+  };
+
+  const filterStatus = (paramToFilter: string) => {
     return activities.filter((activity) =>
       activity["status"].includes(paramToFilter)
     );
   };
 
-  useEffect(() => {
-    fetchActivities();
-  }, [fetchActivities]);
-
   return (
     <ActivitiesContext.Provider
       value={{
         activities,
-        fetchActivities,
-        updateActivity,
-        createActivity,
-        getActivityStatus
+        create,
+        getById,
+        update,
+        filterStatus,
+        getAll
       }}
     >
       {children}

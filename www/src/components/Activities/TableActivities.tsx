@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Activity } from "../../models/Activity";
+import { Activity } from "../../@types/Activity";
 
 interface TableActivitiesProps {
   activities: Activity[];

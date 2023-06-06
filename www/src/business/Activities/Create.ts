@@ -1,4 +1,4 @@
-import { Activity } from "../../models/Activity";
+import { Activity } from "../../@types/Activity";
 
 import { uploadImageInStorageFirebase } from "../../utils/uploadImageFirebase";
 
@@ -19,6 +19,4 @@ export async function createActivity(formData: FormData) {
     status: "agendado",
     image: image.url
   } as Activity;
-  const result = await CreateActivityService(informations);
-  return result;
 }

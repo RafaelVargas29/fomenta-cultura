@@ -15,11 +15,11 @@ interface SummaryProps {
 export function Summary(props: SummaryProps) {
   const { statusbar } = useContextSelector(ActivitiesContext, (context) => {
     return {
-      statusbar: context.getActivityStatus
+      statusbar: context.filterStatus
     };
   });
   return (
-    <section className="py-8">
+    <section className="pb-8 pt-6">
       <h2 className="subtitle">Suas Atividades</h2>
       <div className="h-[250px] sm:h-full grid-performance no-scrollbar overflow-scroll">
         <SummaryCard

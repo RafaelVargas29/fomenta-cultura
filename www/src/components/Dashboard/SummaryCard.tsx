@@ -20,7 +20,7 @@ export function SummaryCard({
     <div
       onClick={() => action(title)}
       title={title}
-      className={`shadow-xl hover:shadow rounded-lg p-8 cursor-pointer ${
+      className={`shadow-xl hover:shadow rounded-lg px-8 pt-6 pb-4 cursor-pointer ${
         className ?? ""
       }`}
     >
@@ -30,7 +30,7 @@ export function SummaryCard({
           className: "icon"
         })}
       </header>
-      <strong className="block mt-4 text-4xl">{qtdActivities}</strong>
+      <strong className="mt-3 block text-4xl">{qtdActivities}</strong>
     </div>
   );
 }

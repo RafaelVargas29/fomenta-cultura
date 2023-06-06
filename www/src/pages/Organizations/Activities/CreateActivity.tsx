@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import MediaPicker from "../../../components/MediaPicker";
-import { create } from "../../../business/Activities/Create";
+import { useContextSelector } from "use-context-selector";
+import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 
 export function CreateActivity() {
   const navigate = useNavigate();
+  const { create } = useContextSelector(ActivitiesContext, (context) => {
+    return { create: context.create };
+  });
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [form, setForm] = useState({
     title: {
@@ -63,32 +67,14 @@ export function CreateActivity() {
       }
     });
   }
+
   async function handleCreateActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
     setIsSubmiting(true);
-    await create(formData);
+    await create(new FormData(event.currentTarget));
     setIsSubmiting(false);
-    setForm({
-      title: {
-        hasChanged: false,
-        value: ""
-      },
-      description: {
-        hasChanged: false,
-        value: ""
-      },
-      dateEvent: {
-        hasChanged: false,
-        value: ""
-      },
-      hoursEvent: {
-        hasChanged: false,
-        value: ""
-      }
-    });
 
-    navigate("/activities/all");
+    navigate("/activities");
   }
 
   return (

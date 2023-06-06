@@ -19,11 +19,11 @@ export function Navbar() {
         <span className="sidebar-text">Criar Atividade</span>
       </Link>
 
-      <Link to={"/activities/all"} title="Atividade" className="sidebar-link">
+      <Link to={"/activities"} title="Atividade" className="sidebar-link">
         <GiBugleCall className="icon" />
         <span className="sidebar-text">Atividades</span>
       </Link>
-      <Link to={"/activities/all"} title="Profile" className="sidebar-link">
+      <Link to={"/profile"} title="Profile" className="sidebar-link">
         <BiUser className="icon" />
         <span className="sidebar-text">Profile</span>
       </Link>

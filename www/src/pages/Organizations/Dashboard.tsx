@@ -1,23 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Activity } from "../../models/Activity";
+import { Activity } from "../../@types/Activity";
 import ViewContainer from "../../templates/ViewContainer";
 import { Summary } from "../../components/Dashboard/Summary";
 import { MdOutlineFilterAltOff } from "react-icons/md";
 import { BiCalendarAlt, BiPlusCircle } from "react-icons/bi";
-import { dateFormatter } from "../../utils/formatter";
 import { useContextSelector } from "use-context-selector";
 import { ActivitiesContext } from "../../store/context/ActivitiesContext";
+import { forma } from "../../utils/formatter";
 
 export function Dashboard() {
   const [keyWord, setKeyWord] = useState("");
   const [statusFiltered, setStatusFilter] = useState<Activity[]>([]);
-  const { activities, status } = useContextSelector(
+  const { activities, status, get } = useContextSelector(
     ActivitiesContext,
     (context) => {
       return {
-        status: context.getActivityStatus,
-        activities: context.activities
+        activities: context.activities,
+        get: context.getAll,
+        status: context.filterStatus
       };
     }
   );
@@ -25,8 +26,12 @@ export function Dashboard() {
     setKeyWord(title);
     setStatusFilter(status(title));
   };
+
+  useEffect(() => {
+    get();
+  }, [get]);
   return (
-    <ViewContainer className="space-y-5 w-full m-auto px-6">
+    <ViewContainer className="space-y-5 w-full px-6">
       <Summary action={applyFilter} />
       <section id="buttons" className={`mb-5 flex-between`}>
         <h2 className="subtitle w-[500px]">
@@ -51,13 +56,12 @@ export function Dashboard() {
             <BiPlusCircle />
             Criar Atividade
           </Link>
-          <a href={"/activities/all"} className="btn bg-hover">
+          <a href={"/activities"} className="btn bg-hover">
             <BiCalendarAlt />
             Ver Todos
           </a>
         </div>
       </section>
-
       <section className={`overflow-auto h-[160px] md:h-[320px] pb-6`}>
         <table className="w-full min-w-[600px] border-collapse">
           <thead>
@@ -71,13 +75,50 @@ export function Dashboard() {
           <tbody>
             {keyWord
               ? statusFiltered.map((activity) => (
-                  <tr key={activity.id}>
-                    <td className="td">{activity.title}</td>
-                    <td className="td">
-                      {dateFormatter.format(new Date(activity.dateEvent))}
+                  <tr
+                    key={activity.id}
+                    className={`
+                  ${activity.status === "cancelado" && "td-cancelado"}
+                  ${activity.status === "concluido" && "td-concluido"}
+                  td
+                  `}
+                  >
+                    <td
+                      className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                    >
+                      {activity.title}
                     </td>
-                    <td className="td">{activity.hoursEvent}</td>
-                    <td className="td">{activity.status}</td>
+                    <td
+                      className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                    >
+                      {forma(activity.dateEvent)}
+                    </td>
+                    <td
+                      className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                    >
+                      {activity.hoursEvent}
+                    </td>
+                    <td
+                      className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                    >
+                      {activity.status}
+                    </td>
                   </tr>
                 ))
               : activities.length > 0
@@ -85,12 +126,43 @@ export function Dashboard() {
                   (activity, index) =>
                     index < 5 && (
                       <tr key={activity.id}>
-                        <td className="td">{activity.title}</td>
-                        <td className="td">
-                          {dateFormatter.format(new Date(activity.dateEvent))}
+                        <td
+                          className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                        >
+                          {activity.title}
                         </td>
-                        <td className="td">{activity.hoursEvent}</td>
-                        <td className="td">{activity.status}</td>
+
+                        <td
+                          className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                        >
+                          {forma(activity.dateEvent)}
+                        </td>
+                        <td
+                          className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                        >
+                          {activity.hoursEvent}
+                        </td>
+                        <td
+                          className={`
+                          ${activity.status === "cancelado" && "td-cancelado"}
+                          ${activity.status === "concluido" && "td-concluido"}
+                          td
+                          `}
+                        >
+                          {activity.status}
+                        </td>
                       </tr>
                     )
                 )
