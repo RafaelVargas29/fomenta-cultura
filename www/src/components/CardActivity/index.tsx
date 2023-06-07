@@ -12,18 +12,30 @@ interface CardActivityProps {
   createdAt: string;
 }
 
-export function CardActivity(props: any) {
+export function CardActivity({
+  createdAt,
+  dateEvent,
+  description,
+  hoursEvent,
+  id,
+  status,
+  title,
+  image
+}: CardActivityProps) {
   return (
-    <Link to={""} className={style.card}>
+    <Link to={`details/${id}`} className={style.card}>
       <div
         className={style.containerImage}
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1682686578023-dc680e7a3aeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)`
+          backgroundImage: `url(${image})`
         }}
       />
       <section className={style.content}>
-        <span className={style.category}>Data - Hora</span>
-        <h1 className={style.title}>Title da Atividade</h1>
+        <span className={style.category}>
+          {dateEvent} - {hoursEvent}
+        </span>
+        <h1 className={style.title}>{title}</h1>
+        <span className={style.text}>{description}</span>
         <span className={style.text}>Local</span>
       </section>
     </Link>

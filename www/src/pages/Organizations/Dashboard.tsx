@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Activity } from "../../@types/Activity";
 import ViewContainer from "../../templates/ViewContainer";
@@ -12,12 +12,11 @@ import { forma } from "../../utils/formatter";
 export function Dashboard() {
   const [keyWord, setKeyWord] = useState("");
   const [statusFiltered, setStatusFilter] = useState<Activity[]>([]);
-  const { activities, status, get } = useContextSelector(
+  const { activities, status } = useContextSelector(
     ActivitiesContext,
     (context) => {
       return {
         activities: context.activities,
-        get: context.getAll,
         status: context.filterStatus
       };
     }
@@ -27,9 +26,6 @@ export function Dashboard() {
     setStatusFilter(status(title));
   };
 
-  useEffect(() => {
-    get();
-  }, [get]);
   return (
     <ViewContainer className="space-y-5 w-full px-6">
       <Summary action={applyFilter} />

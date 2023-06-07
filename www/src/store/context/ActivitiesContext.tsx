@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { createContext } from "use-context-selector";
 import { Activity } from "../../@types/Activity";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -23,6 +23,7 @@ interface ActivityContextType {
   getAll: () => void;
   create: (data: any) => Promise<string>;
   getById: (id?: string) => Promise<Activity>;
+  search: (name: string) => Activity[];
   update: (id: string, data: any) => Promise<void>;
   filterStatus: (paramToFilter: string) => Activity[];
 }
@@ -41,8 +42,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
       (date.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
     );
   }
-
-  const checkActivitiesIsConcluid = async (data: any) => {
+  const modifierToConcluided = async (data: any) => {
     const obj = { ...data.data() };
     const id = data.id;
     if (obj.status !== "cancelado" && obj.status !== "concluido") {
@@ -65,7 +65,6 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     );
     return await getDownloadURL(image.ref);
   };
-
   const create = async (data: any): Promise<string> => {
     const colletionRef = collection(db, FIRESTORE_REFERENCE);
     const informations = {
@@ -80,15 +79,13 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     const result = await addDoc(colletionRef, informations);
     return result.id;
   };
-
   const getAll = useCallback(async () => {
     const preview: any[] = [];
     const querySnapshot = await getDocs(
       query(collection(db, FIRESTORE_REFERENCE), orderBy("dateEvent", "desc"))
     );
-
     querySnapshot.forEach((doc) => {
-      checkActivitiesIsConcluid(doc);
+      modifierToConcluided(doc);
     });
     querySnapshot.forEach((doc) => {
       preview.push({
@@ -98,14 +95,15 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     });
     setActivities(preview);
   }, []);
-
   const getById = async (id?: string): Promise<Activity> => {
     return activities.filter((activity) =>
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       activity["id"].includes(id!)
     )[0];
   };
-
+  const search = (name: string): Activity[] => {
+    return activities.filter((activity) => activity["title"].includes(name));
+  };
   const update = async (id: string, data: any): Promise<void> => {
     const ref = doc(db, FIRESTORE_REFERENCE, id);
     await updateDoc(ref, {
@@ -116,12 +114,15 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
       status: data.get("status")
     });
   };
-
   const filterStatus = (paramToFilter: string) => {
     return activities.filter((activity) =>
       activity["status"].includes(paramToFilter)
     );
   };
+
+  useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <ActivitiesContext.Provider
@@ -129,6 +130,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
         activities,
         create,
         getById,
+        search,
         update,
         filterStatus,
         getAll

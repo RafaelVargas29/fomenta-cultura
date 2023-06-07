@@ -6,18 +6,24 @@ import { useContextSelector } from "use-context-selector";
 import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 import { useEffect, useState } from "react";
 import { Activity } from "../../@types/Activity";
+import { SearchForm } from "../../components/SearchForm";
 
 export function Feed() {
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const { status } = useContextSelector(ActivitiesContext, (context) => {
+  const [act, setAct] = useState<Activity[]>([]);
+  const { activities } = useContextSelector(ActivitiesContext, (context) => {
     return {
-      status: context.filterStatus
+      activities: context.activities
     };
   });
+
   useEffect(() => {
-    console.log(status("confirmado"));
-    setActivities(status("confirmado"));
-  }, [status]);
+    activities.map((activ) => {
+      if (activ.status === "agendado" || activ.status === "confirmado") {
+        setAct((old) => [...old, activ]);
+      }
+    });
+  }, [activities]);
+
   return (
     <>
       <header className="fixed-element z-30 flex-col-center h-24 shadow-lg bg-secondary">
@@ -34,7 +40,7 @@ export function Feed() {
             </Link>
             <Link
               to="/register"
-              className="text-primary btn border border-white hover:border-transparent  hover:text-white   hover:bg-primary "
+              className="text-primary btn border border-white hover:border-transparent  hover:text-white   hover:bg-gradient "
             >
               <span className="uppercase font-bold">cadastre-se</span>
             </Link>
@@ -42,26 +48,32 @@ export function Feed() {
         </div>
       </header>
 
-      <main className="mt-28">
+      <main className="mt-32 space-y-12">
         <Boxed>
-          <section>search</section>
+          <SearchForm />
         </Boxed>
+
         <Boxed>
-          <section className="flex-between">
-            <p>titulo da pagina</p>
-            <p>filtro</p>
-          </section>
+          <div />
         </Boxed>
-        <Boxed className=" h-screen bg-gray-200 pt-4">
+
+        <Boxed className="">
           <WrapperGrid>
-            {/* {activities.map((activities) => {
-              return <CardActivity key={activities.id} prop={activities} />;
-            })} */}
-            <CardActivity />
-            <CardActivity />
-            <CardActivity />
-            <CardActivity />
-            <CardActivity />
+            {act.map((activities) => {
+              return (
+                <CardActivity
+                  key={activities.id}
+                  id={activities.id}
+                  createdAt={activities.createdAt}
+                  dateEvent={activities.dateEvent}
+                  description={activities.description}
+                  hoursEvent={activities.hoursEvent}
+                  title={activities.title}
+                  image={activities.image}
+                  status={activities.status}
+                />
+              );
+            })}
           </WrapperGrid>
         </Boxed>
       </main>
