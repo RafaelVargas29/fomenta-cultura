@@ -1,15 +1,25 @@
 import Boxed from "../../templates/Boxed";
 import { FiLogIn } from "react-icons/fi";
 import { GoMegaphone } from "react-icons/go";
-import { Header } from "../../components/LandingPage/Header";
 import { Link } from "react-router-dom";
+import { BiLogIn } from "react-icons/bi";
 
 import HeroImg from "../../assets/images/location.svg";
 
 export function Home() {
   return (
     <>
-      <Header />
+      <header className="fixed-element flex-col-center h-24 shadow-lg bg-secondary">
+        <div className="w-full py-7 px-4 mb-3 flex-center justify-around">
+          <h2 className="text-2xl md:text-[40px] font-bold text-white">
+            Fomenta Cultura
+          </h2>
+          <Link to="/login" className="text-primary md:btn md:bg-gradient ">
+            <BiLogIn size={20} className="text-invisible" />
+            <span className="capitalize font-bold">entrar</span>
+          </Link>
+        </div>
+      </header>
       <main className="mt-24">
         <Boxed id="hero" className="bg-gradient h-[87vh] flex-center">
           <div className="flex-between">

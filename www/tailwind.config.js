@@ -10,6 +10,7 @@ export default {
         xl: "1200px",
         xxl: "1400px"
       },
+
       colors: {
         primary: "#F59E0B",
         secondary: "#8F1DDE",

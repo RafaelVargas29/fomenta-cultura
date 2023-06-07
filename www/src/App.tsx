@@ -8,6 +8,7 @@ import { RequireAuth } from "./pages/RequireAuth";
 import { Dashboard } from "./pages/Organizations/Dashboard";
 import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
 import { EditActivity } from "./pages/Organizations/Activities/EditActivity";
+import { Feed } from "./pages/Feed";
 
 export function App() {
   return (
@@ -17,8 +18,9 @@ export function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgot-password" element={<div>esqueci a senha</div>} />
+        <Route path="feed" element={<Feed />} />
 
-        <Route path="/">
+        <Route path="/" element={<RequireAuth />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="activities">
             <Route index element={<ListallActivity />} />
