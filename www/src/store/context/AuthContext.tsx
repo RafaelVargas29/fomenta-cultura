@@ -8,7 +8,6 @@ import {
 import { createContext } from "use-context-selector";
 import { auth } from "../../config/firebase";
 import { toast } from "react-toastify";
-import { redirect } from "react-router-dom";
 
 interface UserProps {
   email: any;
@@ -16,7 +15,6 @@ interface UserProps {
 }
 interface AuthContextType {
   user: UserProps;
-  isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
   register: (email: string, password: string) => Promise<any>;
@@ -28,31 +26,30 @@ interface AuthProviderProps {
 
 export const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState<UserProps>({} as UserProps);
 
   async function login(email: string, password: string): Promise<any> {
     return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then((userCredential: any) => {
         setUser({
           email: userCredential.user.email,
           name: userCredential.user.email?.split("@")[0]
         });
-        setIsAuthenticated(true);
-        console.log(userCredential);
-        return userCredential;
+        //usar o token aqui
+        localStorage.setItem(
+          "token",
+          JSON.stringify(userCredential.user.accessToken)
+        );
+        return "";
       })
-      .catch((error) => {
-        return { message: error.message };
+      .catch(() => {
+        return "error";
       });
   }
   async function logout() {
-    console.log("dentro da função logout");
-    const res = await signOut(auth);
-    console.log("res ", res);
-    setIsAuthenticated(false);
-    console.log(isAuthenticated);
-    redirect("/");
+    await signOut(auth);
+    localStorage.removeItem("token");
   }
   async function register(email: string, password: string): Promise<any> {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -72,7 +69,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user,
-        isAuthenticated,
         login,
         logout,
         register

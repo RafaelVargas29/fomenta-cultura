@@ -1,12 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useContextSelector } from "use-context-selector";
-import { AuthContext } from "../../store/context/AuthContext";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export function RequireAuth() {
-  const { isAuth } = useContextSelector(AuthContext, (context) => {
-    return {
-      isAuth: context.isAuthenticated
-    };
-  });
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+  const { state } = useLocalStorage("token");
+  console.log("requireAuth token: " + state);
+  return state ? <Outlet /> : <Navigate to="/login" />;
 }

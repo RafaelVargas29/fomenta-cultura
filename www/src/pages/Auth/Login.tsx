@@ -56,8 +56,7 @@ export function Login() {
       password: form.password.value
     };
     const response = await login(data.email, data.password);
-    console.log("handle Login", response);
-    if (!response.message) {
+    if (response !== "error") {
       navgative("/dashboard");
     } else {
       setError(true);
@@ -153,7 +152,9 @@ export function Login() {
             >
               Entrar
             </button>
-            {error && <span>Email ou Senha incorreta</span>}
+            {error && (
+              <span className="flex-center mt-3">Email ou Senha incorreta</span>
+            )}
           </div>
 
           <div className="px-3 w-full ">
