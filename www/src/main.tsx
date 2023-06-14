@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { AuthProvider } from "./store/context/AuthContext";
 import { ActivitiesProvider } from "./store/context/ActivitiesContext";
-import { App } from "./App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import "./styles/index.css";
@@ -15,8 +14,9 @@ import { Dashboard } from "./pages/Organizations/Dashboard";
 import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
 import { CreateActivity } from "./pages/Organizations/Activities/CreateActivity";
 import { EditActivity } from "./pages/Organizations/Activities/EditActivity";
-import { Profiler } from "react";
+
 import { NotFound } from "./pages/NotFound";
+import { Profile } from "./pages/Profile/Profile";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider>
@@ -40,7 +40,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               <Route path="edit/:id" element={<EditActivity />} />
             </Route>
             <Route path="profile">
-              <Route index element={<Profiler />} />
+              <Route index element={<Profile />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
