@@ -1,11 +1,3 @@
-export type Organization = {
-  id?: number;
-  name: string;
-  email: string;
-  password: string;
-  address: Address;
-};
-
 export type Address = {
   cep: string;
   logradouro: string;

@@ -1,24 +1,21 @@
 import Boxed from "../../templates/Boxed";
 import { FiLogIn } from "react-icons/fi";
 import { GoMegaphone } from "react-icons/go";
-import { Link } from "react-router-dom";
-import { BiLogIn } from "react-icons/bi";
-
 import HeroImg from "../../assets/images/location.svg";
+import { Logo } from "../../components/Logo";
+import { BiLogIn } from "react-icons/bi";
 
 export function Home() {
   return (
     <>
-      <header className="fixed-element flex-col-center h-24 shadow-lg bg-secondary">
-        <div className="w-full py-7 px-4 mb-3 flex-center justify-around">
-          <h2 className="text-2xl md:text-[40px] font-bold text-white">
-            Fomenta Cultura
-          </h2>
-          <Link to="/login" className="text-primary md:btn md:bg-gradient ">
+      <header className="fixed-element h-24 bg-secondary shadow-lg flex-between px-4 lg:px-14">
+        <nav className="flex-between w-full lg:w-[1100px] m-auto">
+          <Logo />
+          <a href="/login" className="text-primary md:btn md:bg-gradient ">
             <BiLogIn size={20} className="text-invisible" />
             <span className="capitalize font-bold">entrar</span>
-          </Link>
-        </div>
+          </a>
+        </nav>
       </header>
       <main className="mt-24">
         <Boxed id="hero" className="bg-gradient h-[87vh] flex-center">
@@ -36,17 +33,17 @@ export function Home() {
               </p>
 
               <div className="mt-6 flex-start flex-wrap flex-shrink-0 gap-4 md:gap-10">
-                <Link to="/login" className="btn btn-outline font-bold">
+                <a href="/login" className="btn btn-outline font-bold">
                   <FiLogIn className="icon" />
                   <span>Cadastrar Atividades</span>
-                </Link>
-                <Link
-                  to="/feed"
+                </a>
+                <a
+                  href="/feed"
                   className="btn bg-secondary font-bold hover:bg-secondary/90"
                 >
                   <GoMegaphone className="icon" />
                   <span>Encontrar Atividades</span>
-                </Link>
+                </a>
               </div>
             </section>
             <div className="flex-1 hidden md:block">

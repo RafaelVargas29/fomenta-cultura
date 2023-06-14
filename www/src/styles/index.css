@@ -21,9 +21,17 @@ button {
   font-family: "Nunito", sans-serif;
 }
 
+.grid-profile-form {
+  display: flex;
+}
+
 @layer components {
   .grid-flow-container {
     @apply grid gap-4 w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  /* Nav Component */
+  .logo_text {
+    @apply max-sm:hidden text-2xl font-semibold text-white tracking-wide;
   }
 
   .flex-center {
@@ -42,7 +50,7 @@ button {
     @apply flex justify-between items-center;
   }
   .fixed-element {
-    @apply fixed top-0 left-0 right-0 z-10;
+    @apply fixed top-0 left-0 right-0 z-30;
   }
   .icon {
     @apply flex-shrink-0 h-5 w-5;
@@ -101,7 +109,6 @@ button {
   .input {
     @apply text-black  border border-zinc-100 bg-[#f7e9d1] w-full shadow-sm h-12 px-3 rounded placeholder:text-zinc-500 focus:bg-primary/60 disabled:bg-zinc-300 disabled:border-transparent disabled:cursor-not-allowed;
   }
-
   /* sidebar */
 
   .sidebar-title {

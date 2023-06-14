@@ -1,27 +1,17 @@
 import { Link } from "react-router-dom";
 import style from "./CardActivity.module.scss";
-
-interface CardActivityProps {
-  id: string;
-  title: string;
-  description: string;
-  dateEvent: string;
-  hoursEvent: string;
-  status: "agendado" | "confirmado" | "concluido" | "cancelado";
-  image?: string;
-  createdAt: string;
-}
+import { Activities } from "../../model/Activities";
 
 export function CardActivity({
-  createdAt,
   dateEvent,
   description,
   hoursEvent,
   id,
   status,
   title,
+  address,
   image
-}: CardActivityProps) {
+}: Activities) {
   return (
     <Link to={`details/${id}`} className={style.card}>
       <div
@@ -30,14 +20,18 @@ export function CardActivity({
           backgroundImage: `url(${image})`
         }}
       />
-      <section className={style.content}>
+
+      <div className={style.content}>
         <span className={style.category}>
-          {dateEvent} - {hoursEvent}
+          <strong>
+            {dateEvent} - {hoursEvent}
+          </strong>
+          <span>{status}</span>
         </span>
         <h1 className={style.title}>{title}</h1>
         <span className={style.text}>{description}</span>
-        <span className={style.text}>Local</span>
-      </section>
+        <span className={style.text}>{address?.localidade}</span>
+      </div>
     </Link>
   );
 }

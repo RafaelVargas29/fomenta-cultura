@@ -1,11 +1,9 @@
-interface WelcomeProps {
-  name: string;
-}
+import { useContextSelector } from "use-context-selector";
+import { AuthContext } from "../store/context/AuthContext";
 
-export function Welcome({ name }: WelcomeProps) {
+export function Welcome() {
+  const user = useContextSelector(AuthContext, (context) => context.user);
   return (
-    <>
-      <strong className="text-xl ">Bem-vindo, {name}!</strong>
-    </>
+    <strong className="text-xl mt-6 block">Bem-vindo, {user?.name}!</strong>
   );
 }

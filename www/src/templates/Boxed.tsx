@@ -1,24 +1,24 @@
 import { ReactNode } from "react";
 
-interface BoxedProps {
+interface WrapperProps {
   children: ReactNode;
   className?: string;
   id?: string;
 }
 
-export default function Boxed(props: BoxedProps) {
+export default function Wrapper(props: WrapperProps) {
   return (
     <div
       id={props.id ?? ""}
       className={`
-          flex justify-center w-full
+          flex-center w-full
           ${props.className ?? ""}
       `}
     >
       <div
         className={`
-              px-7 xl:px-0 
-              w-full xl:w-[1100px]
+              px-7 lg:px-0 
+              w-full lg:w-[1100px]
           `}
       >
         {props.children}

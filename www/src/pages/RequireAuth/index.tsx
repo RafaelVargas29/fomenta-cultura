@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export function RequireAuth() {
-  const { state } = useLocalStorage("token");
+  const state = localStorage.getItem("user");
   return state ? <Outlet /> : <Navigate to="/login" />;
 }
