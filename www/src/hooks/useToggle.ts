@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export function useToggle(stateInitial = false) {
-  const [open, setOpen] = useState<boolean>(stateInitial);
+  const [toggle, setToggle] = useState<boolean>(stateInitial);
   function handleToggle() {
-    setOpen((prev) => !prev);
+    setToggle((prev) => !prev);
   }
-  return { open, handleToggle };
+  useEffect(() => {
+    return () => handleToggle();
+  }, []);
+  return { toggle, handleToggle };
 }
