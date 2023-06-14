@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Activity } from "../../@types/Activity";
+
 import ViewContainer from "../../templates/ViewContainer";
 import { Summary } from "../../components/Dashboard/Summary";
 import { MdOutlineFilterAltOff } from "react-icons/md";
@@ -8,10 +8,11 @@ import { BiCalendarAlt, BiPlusCircle } from "react-icons/bi";
 import { useContextSelector } from "use-context-selector";
 import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 import { forma } from "../../utils/formatter";
+import { Activities } from "../../model/Activities";
 
 export function Dashboard() {
   const [keyWord, setKeyWord] = useState("");
-  const [statusFiltered, setStatusFilter] = useState<Activity[]>([]);
+  const [statusFiltered, setStatusFilter] = useState<Activities[]>([]);
   const { activities, status } = useContextSelector(
     ActivitiesContext,
     (context) => {

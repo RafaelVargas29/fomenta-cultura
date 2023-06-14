@@ -1,9 +1,9 @@
-import Boxed from "../../templates/Boxed";
 import { FiLogIn } from "react-icons/fi";
 import { GoMegaphone } from "react-icons/go";
 import HeroImg from "../../assets/images/location.svg";
 import { Logo } from "../../components/Logo";
 import { BiLogIn } from "react-icons/bi";
+import Wrapper from "../../templates/Wrapper";
 
 export function Home() {
   return (
@@ -18,7 +18,7 @@ export function Home() {
         </nav>
       </header>
       <main className="mt-24">
-        <Boxed id="hero" className="bg-gradient h-[87vh] flex-center">
+        <Wrapper id="hero" className="bg-gradient h-[87vh] flex-center">
           <div className="flex-between">
             <section className="max-w-[560px]">
               <h1 className="text-[36px]  md:text-[72px] font-bold">
@@ -50,7 +50,7 @@ export function Home() {
               <img src={HeroImg} alt="" />
             </div>
           </div>
-        </Boxed>
+        </Wrapper>
       </main>
     </>
   );

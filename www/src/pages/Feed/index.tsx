@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Link } from "react-router-dom";
-import Boxed from "../../templates/Boxed";
+import Wrapper from "../../templates/Wrapper";
 import { WrapperGrid } from "../../templates/WrapperGrid";
 import { CardActivity } from "../../components/CardActivity";
 import { useContextSelector } from "use-context-selector";
@@ -53,15 +53,15 @@ export function Feed() {
       </header>
 
       <main className="mt-32 space-y-12">
-        <Boxed>
+        <Wrapper>
           <SearchForm search={search} setSearch={setSearch} />
-        </Boxed>
+        </Wrapper>
 
-        <Boxed>
+        <Wrapper>
           <div />
-        </Boxed>
+        </Wrapper>
 
-        <Boxed className="pb-10">
+        <Wrapper className="pb-10">
           <WrapperGrid>
             {act
               .filter((a) =>
@@ -82,7 +82,7 @@ export function Feed() {
                 );
               })}
           </WrapperGrid>
-        </Boxed>
+        </Wrapper>
       </main>
     </>
   );
