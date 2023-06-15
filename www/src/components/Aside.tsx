@@ -1,5 +1,5 @@
 import { FiChevronLeft, FiChevronRight, FiPower } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiHome, BiPlusCircle, BiUser } from "react-icons/bi";
 import { GiBugleCall } from "react-icons/gi";
 import { useContextSelector } from "use-context-selector";
@@ -31,8 +31,8 @@ export function Asidebar() {
           toggle ? "w-[30px]" : "w-full"
         }`}
       >
-        <Link
-          to={"/dashboard"}
+        <a
+          href={"/dashboard"}
           className={`${
             toggle ? "sidebar-link" : "sidebar-link justify-start"
           }`}
@@ -46,10 +46,10 @@ export function Asidebar() {
           >
             Início
           </span>
-        </Link>
+        </a>
 
-        <Link
-          to={"/activities/new"}
+        <a
+          href={"/activities/new"}
           title="Criar Atividade"
           className={`${
             toggle ? "sidebar-link" : "sidebar-link justify-start"
@@ -63,10 +63,10 @@ export function Asidebar() {
           >
             Criar Atividade
           </span>
-        </Link>
+        </a>
 
-        <Link
-          to={"/activities"}
+        <a
+          href={"/activities"}
           title="Atividade"
           className={`${
             toggle ? "sidebar-link" : "sidebar-link justify-start"
@@ -80,9 +80,9 @@ export function Asidebar() {
           >
             Atividades
           </span>
-        </Link>
-        <Link
-          to={"/profile"}
+        </a>
+        <a
+          href={"/profile"}
           title="Profile"
           className={`${
             toggle ? "sidebar-link" : "sidebar-link justify-start"
@@ -96,7 +96,7 @@ export function Asidebar() {
           >
             Profile
           </span>
-        </Link>
+        </a>
         <div
           title="sair"
           onClick={() => handleLogout()}

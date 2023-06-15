@@ -1,42 +1,45 @@
-import { useContextSelector } from "use-context-selector";
 import ViewContainer from "../../../templates/ViewContainer";
-import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 import { EmptyActivities } from "../../../components/Activities/EmptyActivities";
-import { Link } from "react-router-dom";
+
 import { BiPlusCircle } from "react-icons/bi";
-import { useEffect } from "react";
 import { forma } from "../../../utils/formatter";
+import { useEffect, useState } from "react";
+import { Activities } from "../../../model/Activities";
+import { useContextSelector } from "use-context-selector";
+import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 
 export function ListallActivity() {
-  const { activities, get } = useContextSelector(
-    ActivitiesContext,
-    (context) => {
-      return {
-        activities: context.activities,
-        get: context.getAll
-      };
-    }
-  );
+  const currentUserId = localStorage.getItem("user")?.split('"')[1];
+  const [act, setAct] = useState<Activities[]>([]);
+  const { activities } = useContextSelector(ActivitiesContext, (context) => {
+    return {
+      activities: context.activities
+    };
+  });
 
   useEffect(() => {
-    get();
-  }, [get]);
+    activities.map((activ) => {
+      if (activ.producerId === currentUserId) {
+        setAct((old) => [...old, activ]);
+      }
+    });
+  }, [activities, currentUserId]);
 
   return (
     <ViewContainer className={`mt-12 overflow-auto  w-full m-auto px-6`}>
       <section className={`mb-6 flex items-center justify-between`}>
         <h2 className="text-xl font-medium">Atividades</h2>
-        <Link
-          to={"/activities/new"}
+        <a
+          href={"/activities/new"}
           className="btn bg-hover flex items-center gap-[4px]"
         >
           <BiPlusCircle />
           Criar Atividade
-        </Link>
+        </a>
       </section>
 
       <section className="overflow-auto h-[160px] md:h-[500px] pb-6">
-        {activities.length === 0 ? (
+        {act.length === 0 ? (
           <EmptyActivities />
         ) : (
           <table className="w-full min-w-[600px] border-collapse">
@@ -52,7 +55,7 @@ export function ListallActivity() {
               </tr>
             </thead>
             <tbody>
-              {activities.map((activity) => {
+              {act.map((activity) => {
                 return (
                   <tr
                     key={activity.id}
@@ -78,12 +81,12 @@ export function ListallActivity() {
                       activity.status === "concluido" ? (
                         ""
                       ) : (
-                        <Link
-                          to={`/activities/edit/${activity.id}`}
+                        <a
+                          href={`/activities/edit/${activity.id}`}
                           className={`btn hover:bg-solid-alt hover:text-white font-bold w-20 `}
                         >
                           editar
-                        </Link>
+                        </a>
                       )}
                     </td>
                   </tr>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import style from "./CardActivity.module.scss";
 import { Activities } from "../../model/Activities";
 
@@ -13,7 +12,7 @@ export function CardActivity({
   image
 }: Activities) {
   return (
-    <Link to={`details/${id}`} className={style.card}>
+    <a href={`details/${id}`} className={style.card}>
       <div
         className={style.containerImage}
         style={{
@@ -32,6 +31,6 @@ export function CardActivity({
         <span className={style.text}>{description}</span>
         <span className={style.text}>{address?.localidade}</span>
       </div>
-    </Link>
+    </a>
   );
 }

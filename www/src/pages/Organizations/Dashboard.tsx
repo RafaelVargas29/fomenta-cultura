@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import ViewContainer from "../../templates/ViewContainer";
 import { Summary } from "../../components/Dashboard/Summary";
 import { MdOutlineFilterAltOff } from "react-icons/md";
@@ -11,25 +9,36 @@ import { forma } from "../../utils/formatter";
 import { Activities } from "../../model/Activities";
 
 export function Dashboard() {
+  const currentUserId = localStorage.getItem("user")?.split('"')[1];
   const [keyWord, setKeyWord] = useState("");
+  const [act, setAct] = useState<Activities[]>([]);
   const [statusFiltered, setStatusFilter] = useState<Activities[]>([]);
-  const { activities, status } = useContextSelector(
-    ActivitiesContext,
-    (context) => {
-      return {
-        activities: context.activities,
-        status: context.filterStatus
-      };
-    }
-  );
+  const { activities } = useContextSelector(ActivitiesContext, (context) => {
+    return {
+      activities: context.activities
+    };
+  });
+
+  const filterStatus = (paramToFilter: string) => {
+    return act.filter((activity) => activity["status"].includes(paramToFilter));
+  };
+
   const applyFilter = (title: string) => {
     setKeyWord(title);
-    setStatusFilter(status(title));
+    setStatusFilter(filterStatus(title));
   };
+
+  useEffect(() => {
+    activities.map((activ) => {
+      if (activ.producerId === currentUserId) {
+        setAct((old) => [...old, activ]);
+      }
+    });
+  }, [activities, currentUserId]);
 
   return (
     <ViewContainer className="space-y-5 w-full px-6">
-      <Summary action={applyFilter} />
+      <Summary action={applyFilter} dataCurrent={act} filt={filterStatus} />
       <section id="buttons" className={`mb-5 flex-between`}>
         <h2 className="subtitle w-[500px]">
           Histórico{" "}
@@ -49,10 +58,10 @@ export function Dashboard() {
               <span>Limpar Fitlro</span>
             </div>
           )}
-          <Link to={"/activities/new"} className="btn bg-hover">
+          <a href={"/activities/new"} className="btn bg-hover">
             <BiPlusCircle />
             Criar Atividade
-          </Link>
+          </a>
           <a href={"/activities"} className="btn bg-hover">
             <BiCalendarAlt />
             Ver Todos
@@ -118,8 +127,8 @@ export function Dashboard() {
                     </td>
                   </tr>
                 ))
-              : activities.length > 0
-              ? activities.map(
+              : act.length > 0
+              ? act.map(
                   (activity, index) =>
                     index < 5 && (
                       <tr key={activity.id}>
