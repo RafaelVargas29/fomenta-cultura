@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { createContext } from "use-context-selector";
-import { Activity } from "../../@types/Activity";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 as createUUID } from "uuid";
 import { db, storage } from "../../config/firebase";
@@ -15,17 +14,18 @@ import {
   query,
   updateDoc
 } from "firebase/firestore";
+import { Activities } from "../../model/Activities";
 
 const FIRESTORE_REFERENCE = "activities";
 
 interface ActivityContextType {
-  activities: Activity[];
+  activities: Activities[];
   getAll: () => void;
   create: (data: any) => Promise<string>;
-  getById: (id?: string) => Promise<Activity>;
-  search: (name: string) => Activity[];
+  getById: (id?: string) => Promise<Activities>;
+  search: (name: string) => Activities[];
   update: (id: string, data: any) => Promise<void>;
-  filterStatus: (paramToFilter: string) => Activity[];
+  filterStatus: (paramToFilter: string) => Activities[];
 }
 
 interface ActivitiesProviderProps {
@@ -35,13 +35,14 @@ interface ActivitiesProviderProps {
 export const ActivitiesContext = createContext({} as ActivityContextType);
 
 export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<Activities[]>([]);
 
   function compareInDays(currentDate: Date, date: Date): number {
     return Math.ceil(
       (date.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
     );
   }
+
   const modifierToConcluided = async (data: any) => {
     const obj = { ...data.data() };
     const id = data.id;
@@ -74,7 +75,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
       hoursEvent: data.get("hoursEvent"),
       status: "agendado",
       image: await saveImageInStorage("flyers", data.get("flyer"))
-    } as Activity;
+    } as Activities;
 
     const result = await addDoc(colletionRef, informations);
     return result.id;
@@ -95,14 +96,15 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     });
     setActivities(preview);
   }, []);
-  const getById = async (id?: string): Promise<Activity> => {
-    return activities.filter((activity) =>
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      activity["id"].includes(id!)
-    )[0];
+  const getById = async (id?: string): Promise<Activities> => {
+    const q = activities.filter((activity) => activity["id"] === id)[0];
+    return q;
   };
-  const search = (name: string): Activity[] => {
-    return activities.filter((activity) => activity["title"].includes(name));
+
+  const search = (name: string): Activities[] => {
+    return activities.filter((Activities) =>
+      Activities["title"].includes(name)
+    );
   };
   const update = async (id: string, data: any): Promise<void> => {
     const ref = doc(db, FIRESTORE_REFERENCE, id);

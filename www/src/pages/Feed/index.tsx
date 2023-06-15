@@ -29,36 +29,39 @@ export function Feed() {
 
   return (
     <>
-      <header className="">
-        <nav className=""></nav>
-      </header>
-
-      <header className="fixed-element h-24 bg-secondary shadow-lg">
+      <header className="fixed-element h-28 bg-secondary shadow-lg pt-4">
         <nav className="max-w-[1200px] m-auto flex-center flex-between gap-5">
           <a href={"/"}>
             <Logo />
           </a>
-          <div className="flex-center gap-8">
-            <Link to="/login" className="text-primary hover:text-white">
-              <span className="uppercase font-bold">acesse sua conta</span>
-            </Link>
-            <Link
-              to="/register"
-              className="text-primary btn border border-white hover:border-transparent  hover:text-white   hover:bg-gradient "
-            >
-              <span className="uppercase font-bold">cadastre-se</span>
-            </Link>
-          </div>
+          <Wrapper className="w-96">
+            <SearchForm search={search} setSearch={setSearch} />
+          </Wrapper>
         </nav>
       </header>
 
-      <main className="mt-32 space-y-12">
+      <main className="mt-32 space-y-16">
         <Wrapper>
-          <SearchForm search={search} setSearch={setSearch} />
+          <strong className="text-2xl text-black block">
+            Se joga, encontre a atividade agora!
+          </strong>
+          <div className="mt-4">
+            <div className=" cursor-pointer border border-purple-600 w-14 h-14 rounded-full " />
+          </div>
         </Wrapper>
 
         <Wrapper>
-          <div />
+          <div className="flex items-center justify-between">
+            <div className="flex">
+              <h2>Filtros</h2>
+              <span>buscar por agendados e confirmados</span>
+            </div>
+            <div className="flex">
+              <span>buscar hoje</span>
+              <span>buscar essa semana</span>
+              <span>buscar esse mes</span>
+            </div>
+          </div>
         </Wrapper>
 
         <Wrapper className="pb-10">

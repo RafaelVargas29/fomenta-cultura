@@ -3,7 +3,7 @@ const SearchForm = (props: any) => {
     <input
       type="text"
       className="input input-clean"
-      placeholder="Busque por atividades"
+      placeholder="Busque por titulo da atividade"
       value={props.search}
       onChange={(e) => props.setSearch(e.target.value)}
     />
