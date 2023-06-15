@@ -47,7 +47,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     const obj = { ...data.data() };
     const id = data.id;
     if (obj.status !== "cancelado" && obj.status !== "concluido") {
-      if (compareInDays(new Date(), new Date(obj.dateEvent)) < 0) {
+      if (compareInDays(new Date(), new Date(obj.dateEvent)) < -2) {
         await updateDoc(doc(db, FIRESTORE_REFERENCE, id), {
           status: "concluido"
         });
