@@ -45,6 +45,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
   const update = async (id: string, data: any): Promise<boolean> => {
     const result = await services.activities.updateActivity(id, {
       title: data.get("title"),
+      category: data.get("category"),
       description: data.get("description"),
       dateEvent: data.get("dateEvent"),
       hoursEvent: data.get("hoursEvent"),
@@ -72,6 +73,7 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
 
     const informations = {
       title: data.get("title"),
+      category: data.get("category"),
       description: data.get("description"),
       dateEvent: data.get("dateEvent"),
       hoursEvent: data.get("hoursEvent"),

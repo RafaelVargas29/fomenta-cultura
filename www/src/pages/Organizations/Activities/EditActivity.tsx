@@ -13,6 +13,7 @@ export function EditActivity() {
   const [isSubmiting, setIsSubmiting] = useState(false);
 
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [dateEvent, setDateEvent] = useState("");
   const [hoursEvent, setHoursEvent] = useState("");
@@ -41,6 +42,7 @@ export function EditActivity() {
     async function buscarDados() {
       const result: Activity = await getById(id);
       setTitle(result.title);
+      setCategory(result.category);
       setDescription(result.description);
       setDateEvent(result.dateEvent);
       setHoursEvent(result.hoursEvent);
@@ -78,6 +80,22 @@ export function EditActivity() {
               onChange={(e) => setTitle(e.target.value)}
               data-testid="title"
             />
+          </label>
+          <label htmlFor="category" className="flex-1 flex flex-col mb-6">
+            Categoria:
+            <select 
+              name="category" 
+              id="category" 
+              className="input input-clean bg-gray-200"
+              onChange={(e) => setCategory(e.target.value)}
+              data-testid="category"
+            >
+              <option value="sport">Esporte</option>
+              <option value="dance">Dança</option>
+              <option value="music">Música</option>
+              <option value="movie_theater">Cinema</option>
+              <option value="theater">Teatro</option>
+            </select>
           </label>
           <label htmlFor="description" className="flex-1 flex flex-col mb-6">
             Descrição:

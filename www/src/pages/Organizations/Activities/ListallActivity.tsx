@@ -47,6 +47,7 @@ export function ListallActivity() {
               <tr>
                 <th className="th">Flyer</th>
                 <th className="th">Title</th>
+                <th className="th">Categoria</th>
                 <th className="th">Descrição</th>
                 <th className="th">Data</th>
                 <th className="th">Horário</th>
@@ -71,6 +72,7 @@ export function ListallActivity() {
                       </div>
                     </td>
                     <td>{activity.title}</td>
+                    <td>{activity.category}</td>
                     <td>{activity.description}</td>
 
                     <td>{forma(activity.dateEvent)}</td>

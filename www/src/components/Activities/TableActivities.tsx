@@ -17,6 +17,7 @@ export function TableActivities({ activities }: TableActivitiesProps) {
         <tr>
           <th className="th" />
           <th className="th">Title</th>
+          <th className="th">Categoria</th>
           <th className="th">Descrição</th>
           <th className="th">Data</th>
           <th className="th">Horário</th>
@@ -39,6 +40,7 @@ export function TableActivities({ activities }: TableActivitiesProps) {
                 </div>
               </td>
               <td>{activity.title}</td>
+              <td>{activity.category}</td>
               <td>{activity.description}</td>
               <td>{activity.dateEvent}</td>
               <td>{activity.hoursEvent}</td>

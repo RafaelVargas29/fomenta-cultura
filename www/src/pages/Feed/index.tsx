@@ -79,6 +79,7 @@ export function Feed() {
                     description={activities.description}
                     hoursEvent={activities.hoursEvent}
                     title={activities.title}
+                    category={activities.category}
                     image={activities.image}
                     status={activities.status}
                   />

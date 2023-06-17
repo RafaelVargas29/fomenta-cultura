@@ -18,6 +18,10 @@ export function CreateActivity() {
       hasChanged: false,
       value: ""
     },
+    category: {
+      hasChanged: false,
+      value: ""
+    },
     description: {
       hasChanged: false,
       value: ""
@@ -35,6 +39,15 @@ export function CreateActivity() {
     setForm({
       ...form,
       title: {
+        hasChanged: true,
+        value: event.target.value
+      }
+    });
+  }
+  function handleCategoryChange(event: ChangeEvent<HTMLSelectElement>) {
+    setForm({
+      ...form,
+      category: {
         hasChanged: true,
         value: event.target.value
       }
@@ -106,6 +119,21 @@ export function CreateActivity() {
               data-testid="title"
             />
           </label>
+          <label htmlFor="category" className="flex-1 flex flex-col mb-6">
+            Categoria:
+            <select 
+              name="category" 
+              id="category" 
+              className="input input-clean bg-gray-200"
+              onChange={handleCategoryChange}
+            >
+              <option value="sport">Esporte</option>
+              <option value="dance">Dança</option>
+              <option value="music">Música</option>
+              <option value="movie_theater">Cinema</option>
+              <option value="theater">Teatro</option>
+            </select>
+          </label>
           <label htmlFor="description" className="flex-1 flex flex-col mb-6">
             Descrição:
             <input
@@ -162,6 +190,7 @@ export function CreateActivity() {
             data-testid="login-button"
             disabled={
               !form.title.value ||
+              !form.category.value ||
               !form.description.value ||
               !form.dateEvent.value ||
               !form.hoursEvent.value ||

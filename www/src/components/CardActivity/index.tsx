@@ -8,6 +8,7 @@ export function CardActivity({
   id,
   status,
   title,
+  category,
   address,
   image
 }: Activities) {
@@ -29,6 +30,7 @@ export function CardActivity({
         </span>
         <h1 className={style.title}>{title}</h1>
         <span className={style.text}>{description}</span>
+        <span className={style.text}>{category}</span>
         <span className={style.text}>{address?.localidade}</span>
       </div>
     </a>
