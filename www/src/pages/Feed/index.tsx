@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 import SearchForm from "../../components/Feed/SearchForm";
 import { Activities } from "../../model/Activities";
 import { Logo } from "../../components/Logo";
+import CategoryFilter from "../../components/Feed/CategoryFilter";
 
 export function Feed() {
+  const [categoryFilter, setCategoryFilter] = useState("");
   const [search, setSearch] = useState("");
   const [act, setAct] = useState<Activities[]>([]);
   const { activities } = useContextSelector(ActivitiesContext, (context) => {
@@ -43,11 +45,9 @@ export function Feed() {
       <main className="mt-32 space-y-16">
         <Wrapper>
           <strong className="text-2xl text-black block">
-            Se joga, encontre a atividade agora!
+            Se joga, selecione a categoria que deseja e encontre a atividade agora!
           </strong>
-          <div className="mt-4">
-            <div className=" cursor-pointer border border-purple-600 w-14 h-14 rounded-full " />
-          </div>
+          <CategoryFilter categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter}/>
         </Wrapper>
 
         <Wrapper>
@@ -69,6 +69,8 @@ export function Feed() {
             {act
               .filter((a) =>
                 a.title.toLowerCase().includes(search.toLowerCase())
+              ).filter((a) =>
+                a.category === categoryFilter
               )
               .map((activities) => {
                 return (

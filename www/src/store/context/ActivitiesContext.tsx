@@ -26,6 +26,7 @@ interface ActivityContextType {
   getAll: () => void;
   create: (data: any) => Promise<string>;
   getById: (id?: string) => Promise<Activities>;
+  categoryFilter: (name: string) => Activities[];
   search: (name: string) => Activities[];
   update: (id: string, data: any) => Promise<boolean>;
   filterStatus: (paramToFilter: string) => Activities[];
@@ -104,6 +105,12 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
     );
   };
 
+  const categoryFilter = (name: string): Activities[] => {
+    return activities.filter((Activities) =>
+      Activities["category"].includes(name)
+    );
+  };
+
   const filterStatus = (paramToFilter: string) => {
     return activities.filter((activity) =>
       activity["status"].includes(paramToFilter)
@@ -120,10 +127,12 @@ export function ActivitiesProvider({ children }: ActivitiesProviderProps) {
         activities,
         create,
         getById,
+        categoryFilter,
         search,
         update,
         filterStatus,
         getAll
+        
       }}
     >
       {children}
