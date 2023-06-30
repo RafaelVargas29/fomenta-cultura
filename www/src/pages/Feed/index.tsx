@@ -65,30 +65,42 @@ export function Feed() {
         </Wrapper>
 
         <Wrapper className="pb-10">
-          <WrapperGrid>
-            {act
-              .filter((a) =>
-                a.title.toLowerCase().includes(search.toLowerCase())
-              ).filter((a) =>
-                a.category === categoryFilter
-              )
-              .map((activities) => {
-                return (
-                  <CardActivity
-                    key={activities.id}
-                    id={activities.id!}
-                    dateEvent={activities.dateEvent}
-                    description={activities.description}
-                    hoursEvent={activities.hoursEvent}
-                    title={activities.title}
-                    category={activities.category}
-                    image={activities.image}
-                    status={activities.status}
-                  />
-                );
-              })}
-          </WrapperGrid>
-        </Wrapper>
+  <WrapperGrid>
+    {search === "" && categoryFilter === "" // Verifica se nenhum filtro está especificado
+      ? act.map((activities) => (
+          <CardActivity
+            key={activities.id}
+            id={activities.id!}
+            dateEvent={activities.dateEvent}
+            description={activities.description}
+            hoursEvent={activities.hoursEvent}
+            title={activities.title}
+            category={activities.category}
+            image={activities.image}
+            status={activities.status}
+          />
+        ))
+      : act
+          .filter((a) =>
+            a.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .filter((a) => a.category === categoryFilter)
+          .map((activities) => (
+            <CardActivity
+              key={activities.id}
+              id={activities.id!}
+              dateEvent={activities.dateEvent}
+              description={activities.description}
+              hoursEvent={activities.hoursEvent}
+              title={activities.title}
+              category={activities.category}
+              image={activities.image}
+              status={activities.status}
+            />
+          ))}
+  </WrapperGrid>
+</Wrapper>
+
       </main>
     </>
   );
