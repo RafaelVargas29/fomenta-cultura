@@ -17,6 +17,7 @@ import { EditActivity } from "./pages/Organizations/Activities/EditActivity";
 
 import { NotFound } from "./pages/NotFound";
 import { Profile } from "./pages/Profile/Profile";
+import Details from "./pages/Details";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider>
@@ -29,7 +30,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
           <Route path="feed">
             <Route index element={<Feed />} />
-            <Route path="details/:id" element={<div>detalhes</div>} />
+            <Route path="details/:id" element={<Details />} />
           </Route>
 
           <Route path="/" element={<RequireAuth />}>

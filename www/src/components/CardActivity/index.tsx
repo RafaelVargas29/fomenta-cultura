@@ -13,7 +13,7 @@ export function CardActivity({
   image
 }: Activities) {
   return (
-    <a href={`details/${id}`} className={style.card}>
+    <a href={`feed/details/${id}`} className={style.card}>
       <div
         className={style.containerImage}
         style={{

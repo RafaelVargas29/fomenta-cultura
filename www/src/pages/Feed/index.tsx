@@ -69,7 +69,7 @@ export function Feed() {
             {act
               .filter((a) => {
                 if (search === "" && categoryFilter === "") {
-                  return true; // Retorna todas as atividades se nenhum filtro estiver especificado
+                  return true; 
                 }
                 return (
                   a.title.toLowerCase().includes(search.toLowerCase()) &&

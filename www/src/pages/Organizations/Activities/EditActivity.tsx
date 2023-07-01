@@ -90,11 +90,12 @@ export function EditActivity() {
               onChange={(e) => setCategory(e.target.value)}
               data-testid="category"
             >
-              <option value="sport">Esporte</option>
-              <option value="dance">Dança</option>
-              <option value="music">Música</option>
-              <option value="movie_theater">Cinema</option>
-              <option value="theater">Teatro</option>
+              <option value="Esporte">Esporte</option>
+              <option value="Dança">Dança</option>
+              <option value="Música">Música</option>
+              <option value="Cinema">Cinema</option>
+              <option value="Teatro">Teatro</option>
+              <option value="Exposição Artistica">Exposição</option>
             </select>
           </label>
           <label htmlFor="description" className="flex-1 flex flex-col mb-6">
