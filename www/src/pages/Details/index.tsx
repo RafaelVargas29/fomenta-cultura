@@ -4,10 +4,12 @@ import { Activities } from "../../model/Activities";
 import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 import { useContextSelector } from "use-context-selector";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { BiLeftArrowAlt } from "react-icons/bi";
 
 export default function Details() {
-  const { id } = useParams(); // Obtém o ID da URL
+  const { id } = useParams(); 
+  const navigate = useNavigate();
   const [activity, setActivity] = useState<Activities | null>(null);
   const { activities } = useContextSelector(ActivitiesContext, (context) => {
     return {
@@ -31,7 +33,16 @@ export default function Details() {
         </nav>
       </header>
 
-      <main className="mt-32 space-y-16">
+      <main className="mt-32">
+        <Wrapper>
+            <span
+            className=" text-primary/60 flex items-center font-bold mt-3 ml-4 cursor-pointer hover:text-primary"
+            onClick={() => navigate(-1)}
+            title="voltar"
+            >
+            <BiLeftArrowAlt className="icon w-8 h-8" />
+          </span>
+        </Wrapper>
         <Wrapper>
           <div className="flex justify-center items-center w-full h-[550px] bg-gray-200 my-12 rounded-lg">
             <div className="flex w-full h-[550px] rounded-lg overflow-hidden shadow-md">

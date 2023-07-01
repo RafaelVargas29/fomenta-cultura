@@ -44,23 +44,11 @@ export function Feed() {
 
       <main className="mt-32 space-y-16">
         <Wrapper>
-          <strong className="text-2xl text-black block">
-            Se joga, selecione a categoria que deseja e encontre a atividade agora!
-          </strong>
-          <CategoryFilter categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter}/>
-        </Wrapper>
-
-        <Wrapper>
-          <div className="flex items-center justify-between">
-            <div className="flex">
-              <h2>Filtros</h2>
-              <span>buscar por agendados e confirmados</span>
-            </div>
-            <div className="flex">
-              <span>buscar hoje</span>
-              <span>buscar essa semana</span>
-              <span>buscar esse mes</span>
-            </div>
+          <div className="flex flex-col gap-4">
+            <strong className="text-2xl text-black block">
+              Se joga, selecione a categoria que deseja e encontre a atividade agora!
+            </strong>
+            <CategoryFilter categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter}/>
           </div>
         </Wrapper>
 
