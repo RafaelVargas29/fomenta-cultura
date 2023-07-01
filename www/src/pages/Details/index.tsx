@@ -42,7 +42,7 @@ export default function Details() {
               </div>
               <div className="w-1/2 bg-secondary p-6 flex flex-col justify-center">
                 {activity && (
-                  <div className="text-primary">
+                  <div className="text-white">
                     <h1 className="text-6xl font-bold leading-tight mb-6">{activity.title}</h1>
                     <div className="text-2xl mb-2">
                       <span className="font-bold">Descrição:</span> {activity.description}
