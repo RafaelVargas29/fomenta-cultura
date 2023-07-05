@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
-import { Activity } from "../../../@types/Activity";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useContextSelector } from "use-context-selector";
@@ -39,18 +38,18 @@ export function EditActivity() {
   }
 
   useEffect(() => {
-    async function buscarDados() {
-      const result: Activity = await getById(id);
-      setTitle(result.title);
-      setCategory(result.category);
-      setDescription(result.description);
-      setDateEvent(result.dateEvent);
-      setHoursEvent(result.hoursEvent);
-      setStatus(result.status);
-      // setImageURL(result.image);
+    async function fetchData() {
+      const selectedActivity = await getById(id);
+      setTitle(selectedActivity.title);
+      setCategory(selectedActivity.category);
+      setDescription(selectedActivity.description);
+      setDateEvent(selectedActivity.dateEvent);
+      setHoursEvent(selectedActivity.hoursEvent);
+      setStatus(selectedActivity.status);
+      // setImageURL(selectedActivity.image);
     }
-    buscarDados();
-  }, []);
+    fetchData();
+  }, [getById, id]);
 
   return (
     <ViewContainer>
@@ -87,6 +86,7 @@ export function EditActivity() {
               name="category" 
               id="category" 
               className="input input-clean bg-gray-200"
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
               data-testid="category"
             >
@@ -139,7 +139,13 @@ export function EditActivity() {
           </div>
           <label htmlFor="status" className="flex-1 flex flex-col mb-6">
             Status:
-            <select name="status" id="status" className="input input-clean">
+            <select 
+              name="status" 
+              id="status" 
+              className="input input-clean"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
               <option value={status}>{status}</option>
               <option value="confirmado">Confirmar</option>
               <option value="cancelado">Cancelar</option>
