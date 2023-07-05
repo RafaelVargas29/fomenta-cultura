@@ -84,8 +84,12 @@ export default function Details() {
                     </div>
                     <div className="text-2xl mb-2">
                       <span className="font-bold">Endereço:</span>{" "}
-                      {activity.address?.logradouro}{" "}
-                      {activity.address?.localidade}
+                      {activity.address?.logradouro}{", "}
+                      {activity.address?.number}{", "}
+                      {activity.address?.complement}{", "}
+                      {activity.address?.bairro}{", "}
+                      {activity.address?.localidade}{"/"}
+                      {activity.address?.uf}
                     </div>
                   </div>
                 )}
