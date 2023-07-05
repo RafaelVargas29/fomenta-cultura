@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext } from "use-context-selector";
 import { ReactNode, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import services from "../../services";
+import { createContext } from "use-context-selector";
 import { User } from "../../model/Users";
+import services from "../../services";
 
 interface AuthContextType {
   user: User;
@@ -49,6 +49,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userResult = await services.users.getUser(
         loggedInUser.split('"')[1]
       );
+      console.log("context api", userResult);
       setUser(userResult);
     }
   }

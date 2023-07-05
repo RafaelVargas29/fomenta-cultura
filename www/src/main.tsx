@@ -1,23 +1,24 @@
 import ReactDOM from "react-dom/client";
-import { AuthProvider } from "./store/context/AuthContext";
-import { ActivitiesProvider } from "./store/context/ActivitiesContext";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import "./styles/index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home";
 import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
 import { Feed } from "./pages/Feed";
-import { RequireAuth } from "./pages/RequireAuth";
-import { Dashboard } from "./pages/Organizations/Dashboard";
-import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
+import { Home } from "./pages/Home";
 import { CreateActivity } from "./pages/Organizations/Activities/CreateActivity";
 import { EditActivity } from "./pages/Organizations/Activities/EditActivity";
+import { ListallActivity } from "./pages/Organizations/Activities/ListallActivity";
+import { Dashboard } from "./pages/Organizations/Dashboard";
+import { ActivitiesProvider } from "./store/context/ActivitiesContext";
+import { AuthProvider } from "./store/context/AuthContext";
+import "./styles/index.css";
 
-import { NotFound } from "./pages/NotFound";
-import { Profile } from "./pages/Profile/Profile";
 import Details from "./pages/Details";
+import { NotFound } from "./pages/NotFound";
+import { EditProfile } from "./pages/Profile/EditProfile";
+import { Profile } from "./pages/Profile/Profile";
+import { RequireAuth } from "./pages/RequireAuth";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider>
@@ -42,6 +43,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             </Route>
             <Route path="profile">
               <Route index element={<Profile />} />
+              <Route path="edit/:id" element={<EditProfile />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -210,8 +210,10 @@ export function CreateActivity() {
       ) : (
         <>
           <p className="text-center mt-4">
-            Você ainda não cadastrou seu endereço,{" "}
-            <a href={`/profile/edit/${prof.id}`} className="underline">cadastre aqui</a>
+            Você ainda não cadastrou seu endereço,
+            <a href={`/profile/edit/${prof.id}`} className="underline">
+              cadastre aqui
+            </a>
           </p>
         </>
       )}
