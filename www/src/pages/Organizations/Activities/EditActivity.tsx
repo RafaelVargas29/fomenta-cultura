@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
-import { Activity } from "../../../@types/Activity";
 import ViewContainer from "../../../templates/ViewContainer";
 import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useContextSelector } from "use-context-selector";
