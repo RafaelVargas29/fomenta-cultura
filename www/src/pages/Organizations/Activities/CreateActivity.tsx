@@ -1,13 +1,16 @@
 /* eslint-disable prefer-const */
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ViewContainer from "../../../templates/ViewContainer";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
-import MediaPicker from "../../../components/MediaPicker";
+import { useNavigate } from "react-router-dom";
 import { useContextSelector } from "use-context-selector";
+import MediaPicker from "../../../components/MediaPicker";
 import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
+import { AuthContext } from "../../../store/context/AuthContext";
+import ViewContainer from "../../../templates/ViewContainer";
 
 export function CreateActivity() {
+  const prof = useContextSelector(AuthContext, (context) => context.user);
+
   const navigate = useNavigate();
   const { create } = useContextSelector(ActivitiesContext, (context) => {
     return { create: context.create };
@@ -99,111 +102,119 @@ export function CreateActivity() {
       >
         <BiLeftArrowAlt className="icon w-8 h-8" />
       </span>
-
-      <form
-        onSubmit={(e) => handleCreateActivity(e)}
-        className="p-8 max-w-[730px] bg-white flex flex-col rounded-lg m-auto"
-      >
-        <h1 className="text-lg md:text-xl mb-2">Cadastro de Atividade</h1>
-        <fieldset>
-          <label htmlFor="title" className="flex-1 flex flex-col mb-6">
-            Título:
-            <input
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Nome da Atividade"
-              className="input input-clean bg-gray-200"
-              value={form.title.value}
-              onChange={(event) => handleTitleChange(event)}
-              data-testid="title"
-            />
-          </label>
-          <label htmlFor="category" className="flex-1 flex flex-col mb-6">
-            Categoria:
-            <select 
-              name="category" 
-              id="category" 
-              className="input input-clean bg-gray-200"
-              onChange={handleCategoryChange}
-            >
-              <option value="Esporte">Esporte</option>
-              <option value="Dança">Dança</option>
-              <option value="Música">Música</option>
-              <option value="Cinema">Cinema</option>
-              <option value="Teatro">Teatro</option>
-              <option value="Exposição Artistica">Exposição Artistica</option>
-            </select>
-          </label>
-          <label htmlFor="description" className="flex-1 flex flex-col mb-6">
-            Descrição:
-            <input
-              type="text"
-              name="description"
-              id="description"
-              placeholder="Descrição da atividade..."
-              className="input input-clean h-20 bg-gray-200"
-              value={form.description.value}
-              onChange={(event) => handleDescriptionChange(event)}
-              data-testid="description"
-            />
-          </label>
-          <div className="flex flex-wrap gap-4">
-            <label htmlFor="dateEvent" className="flex-1 flex flex-col mb-6">
-              Data:
+      {prof.address?.cep ? (
+        <form
+          onSubmit={(e) => handleCreateActivity(e)}
+          className="p-8 max-w-[730px] bg-white flex flex-col rounded-lg m-auto"
+        >
+          <h1 className="text-lg md:text-xl mb-2">Cadastro de Atividade</h1>
+          <fieldset>
+            <label htmlFor="title" className="flex-1 flex flex-col mb-6">
+              Título:
               <input
-                type="date"
-                name="dateEvent"
-                id="dateEvent"
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Nome da Atividade"
                 className="input input-clean bg-gray-200"
-                value={form.dateEvent.value}
-                onChange={(event) => handleDateEventChange(event)}
-                data-testid="dateEvent"
+                value={form.title.value}
+                onChange={(event) => handleTitleChange(event)}
+                data-testid="title"
               />
             </label>
-            <label htmlFor="hoursEvent" className="flex-1 flex flex-col mb-6">
-              Hora:
-              <input
-                type="time"
-                name="hoursEvent"
-                id="hoursEvent"
+            <label htmlFor="category" className="flex-1 flex flex-col mb-6">
+              Categoria:
+              <select
+                name="category"
+                id="category"
                 className="input input-clean bg-gray-200"
-                value={form.hoursEvent.value}
-                onChange={(event) => handleHoursEventChange(event)}
-                data-testid="hoursEvent"
+                onChange={handleCategoryChange}
+              >
+                <option value="Esporte">Esporte</option>
+                <option value="Dança">Dança</option>
+                <option value="Música">Música</option>
+                <option value="Cinema">Cinema</option>
+                <option value="Teatro">Teatro</option>
+                <option value="Exposição Artistica">Exposição Artistica</option>
+              </select>
+            </label>
+            <label htmlFor="description" className="flex-1 flex flex-col mb-6">
+              Descrição:
+              <input
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Descrição da atividade..."
+                className="input input-clean h-20 bg-gray-200"
+                value={form.description.value}
+                onChange={(event) => handleDescriptionChange(event)}
+                data-testid="description"
               />
             </label>
-          </div>
-          <div className="flex items-center gap-9 h-[115px]">
-            <label
-              htmlFor="media"
-              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
+            <div className="flex flex-wrap gap-4">
+              <label htmlFor="dateEvent" className="flex-1 flex flex-col mb-6">
+                Data:
+                <input
+                  type="date"
+                  name="dateEvent"
+                  id="dateEvent"
+                  className="input input-clean bg-gray-200"
+                  value={form.dateEvent.value}
+                  onChange={(event) => handleDateEventChange(event)}
+                  data-testid="dateEvent"
+                />
+              </label>
+              <label htmlFor="hoursEvent" className="flex-1 flex flex-col mb-6">
+                Hora:
+                <input
+                  type="time"
+                  name="hoursEvent"
+                  id="hoursEvent"
+                  className="input input-clean bg-gray-200"
+                  value={form.hoursEvent.value}
+                  onChange={(event) => handleHoursEventChange(event)}
+                  data-testid="hoursEvent"
+                />
+              </label>
+            </div>
+            <div className="flex items-center gap-9 h-[115px]">
+              <label
+                htmlFor="media"
+                className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
+              >
+                <BiCamera className={`icon`} />
+                Adicionar um flyer
+              </label>
+              <MediaPicker />
+            </div>
+          </fieldset>
+          <div className="flex justify-end mt-5">
+            <button
+              type="submit"
+              data-testid="login-button"
+              disabled={
+                !form.title.value ||
+                !form.category.value ||
+                !form.description.value ||
+                !form.dateEvent.value ||
+                !form.hoursEvent.value ||
+                isSubmiting
+              }
+              className="text-white w-36 flex items-center gap-2 btn bg-success disabled:bg-primary/50 disabled:cursor-not-allowed "
             >
-              <BiCamera className={`icon`} />
-              Adicionar um flyer
-            </label>
-            <MediaPicker />
+              <BiSave className="icon" />
+              <span className="font-semibold">Salvar</span>
+            </button>
           </div>
-        </fieldset>
-        <div className="flex justify-end mt-5">
-          <button
-            type="submit"
-            data-testid="login-button"
-            disabled={
-              !form.title.value ||
-              !form.category.value ||
-              !form.description.value ||
-              !form.dateEvent.value ||
-              !form.hoursEvent.value ||
-              isSubmiting
-            }
-            className="text-white w-36 flex items-center gap-2 btn bg-success disabled:bg-primary/50 disabled:cursor-not-allowed "
-          >
-            <BiSave className="icon" />
-            <span className="font-semibold">Salvar</span>
-          </button>
-        </div>
-      </form>
+        </form>
+      ) : (
+        <>
+          <p className="text-center mt-4">
+            Você ainda não cadastrou seu endereço,{" "}
+            <a href={`/profile/edit/${prof.id}`} className="underline">cadastre aqui</a>
+          </p>
+        </>
+      )}
     </ViewContainer>
   );
 }
