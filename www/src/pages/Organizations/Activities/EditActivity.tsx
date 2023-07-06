@@ -2,9 +2,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import ViewContainer from "../../../templates/ViewContainer";
-import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
+import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useContextSelector } from "use-context-selector";
 import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
+import MediaPicker from "../../../components/MediaPicker";
 
 export function EditActivity() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export function EditActivity() {
   const [dateEvent, setDateEvent] = useState("");
   const [hoursEvent, setHoursEvent] = useState("");
   const [status, setStatus] = useState("");
-  // const [imageURL, setImageURL] = useState<string | undefined>("");
+  const [imageURL, setImageURL] = useState<string | undefined>("");
 
   const { getById, update } = useContextSelector(
     ActivitiesContext,
@@ -46,7 +47,7 @@ export function EditActivity() {
       setDateEvent(selectedActivity.dateEvent);
       setHoursEvent(selectedActivity.hoursEvent);
       setStatus(selectedActivity.status);
-      // setImageURL(selectedActivity.image);
+      setImageURL(selectedActivity.image);
     }
     fetchData();
   }, [getById, id]);
@@ -67,6 +68,16 @@ export function EditActivity() {
       >
         <h1 className="text-lg md:text-xl mb-2">Editar Atividade</h1>
         <fieldset>
+          <div className="flex items-center gap-9 h-[115px]">
+            <label
+              htmlFor="media"
+              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
+            >
+              <BiCamera className={`icon`} />
+              Anexar imagem
+            </label>
+            <MediaPicker imageURL={imageURL} />
+          </div>
           <label htmlFor="title" className="flex-1 flex flex-col mb-6">
             Título:
             <input
@@ -87,7 +98,7 @@ export function EditActivity() {
               id="category" 
               className="input input-clean bg-gray-200"
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) =>setCategory(e.target.value)}
               data-testid="category"
             >
               <option value="Esporte">Esporte</option>
@@ -151,16 +162,6 @@ export function EditActivity() {
               <option value="cancelado">Cancelar</option>
             </select>
           </label>
-          {/* <div className="flex items-center gap-9 h-[115px]">
-            <label
-              htmlFor="media"
-              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
-            >
-              <BiCamera className={`icon`} />
-              Anexar imagem
-            </label>
-            <MediaPicker />
-          </div> */}
         </fieldset>
         <div className="flex justify-end mt-5">
           <button
