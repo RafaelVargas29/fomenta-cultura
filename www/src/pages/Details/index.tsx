@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BiLeftArrowAlt } from "react-icons/bi";
+import { BiLeftArrowAlt, BiDetail, BiCalendar, BiMap, BiCategory, BiBookmarks } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContextSelector } from "use-context-selector";
 import { Logo } from "../../components/Logo";
@@ -7,6 +7,7 @@ import { Activities } from "../../model/Activities";
 import { ActivitiesContext } from "../../store/context/ActivitiesContext";
 import Wrapper from "../../templates/Wrapper";
 import { forma } from "../../utils/formatter";
+import { GoClock } from "react-icons/go";
 
 export default function Details() {
   const { id } = useParams();
@@ -62,34 +63,44 @@ export default function Details() {
                     <h1 className="text-6xl font-bold leading-tight mb-6">
                       {activity.title}
                     </h1>
-                    <div className="text-2xl mb-2">
-                      <span className="font-bold">Descrição:</span>{" "}
-                      {activity.description}
+                    <div className="flex gap-3 text-2xl mb-2">
+                      <div className="pt-1">
+                        <BiDetail/>
+                      </div>
+                      <div>
+                        <span className="font-bold">Descrição:</span>{" "}
+                        {activity.description}
+                      </div>
                     </div>
-                    <div className="text-2xl mb-2">
-                      <span className="font-bold">Categoria:</span>{" "}
+                    <div className="flex items-center gap-3 pt-1 text-2xl mb-2">
+                      <BiCategory/><span className="font-bold">Categoria:</span>{" "}
                       {activity.category}
                     </div>
-                    <div className="text-2xl mb-2">
-                      <span className="font-bold">Status:</span>{" "}
+                    <div className="flex items-center gap-3 pt-1 text-2xl mb-2">
+                     <BiBookmarks/> <span className="font-bold">Status:</span>{" "}
                       {activity.status}
                     </div>
-                    <div className="text-2xl">
-                      <span className="font-bold">Data:</span>{" "}
+                    <div className="flex items-center gap-3 pt-1 text-2xl">
+                    <BiCalendar/><span className="font-bold">Data:</span>{" "}
                       {forma(activity.dateEvent)}
                     </div>
-                    <div className="text-2xl">
-                      <span className="font-bold">Horário:</span>{" "}
+                    <div className="flex items-center gap-3 pt-2 text-2xl">
+                      <GoClock/><span className="font-bold">Horário:</span>{" "}
                       {activity.hoursEvent}
                     </div>
-                    <div className="text-2xl mb-2">
-                      <span className="font-bold">Endereço:</span>{" "}
-                      {activity.address?.logradouro}{", "}
-                      {activity.address?.number}{", "}
-                      {activity.address?.complement}{", "}
-                      {activity.address?.bairro}{", "}
-                      {activity.address?.localidade}{"/"}
-                      {activity.address?.uf}
+                    <div className="flex gap-3 pt-2 text-2xl mb-2">
+                      <div className="pt-1">
+                        <BiMap/>
+                      </div>
+                      <div>
+                        <span className="font-bold">Endereço:</span>{" "}
+                        {activity.address?.logradouro}{", "}
+                        {activity.address?.number}{", "}
+                        {activity.address?.complement}{", "}
+                        {activity.address?.bairro}{", "}
+                        {activity.address?.localidade}{"/"}
+                        {activity.address?.uf}
+                      </div>
                     </div>
                   </div>
                 )}
