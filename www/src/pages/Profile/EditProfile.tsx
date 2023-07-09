@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useContextSelector } from "use-context-selector";
@@ -22,17 +22,28 @@ export function EditProfile() {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [cep, setCep] = useState("");
   const [number, setNumber] = useState("");
-
-  const [name, setName] = useState(user?.name);
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
   const [complement, setComplement] = useState("");
   const [address, setAddress] = useState<Address>({} as Address);
-  const [preview, setPreview] = useState<string | null>(user?.imageUrl);
+  const [preview, setPreview] = useState<string | null>(null);
   const types = ["image/jpeg", "image/svg", "image/jpg", "image/png"];
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setBio(user.bio);
+      setPreview(user.imageUrl);
+      setAddress(user.address || ({} as Address));
+      setCep(user.address?.cep || "");
+      setNumber(user.address?.number || "");
+      setComplement(user.address?.complement || "");
+    }
+  }, [user]);
 
   async function buscarDados() {
     const result = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
     if (result.status === 200) {
-      console.log(result.data);
       const obj: Address = {
         cep: result.data.cep,
         logradouro: result.data.logradouro,
@@ -74,7 +85,6 @@ export function EditProfile() {
         complement: data.get("complement") || "SN"
       }
     } as User;
-    console.log("d: ", obj);
     await updateProfileUser(obj, user?.id);
     setIsSubmiting(false);
   }
@@ -82,7 +92,7 @@ export function EditProfile() {
   return (
     <ViewContainer className="px-16 mt-8">
       <span
-        className=" text-primary/60 flex items-center font-bold mt-3 ml-4 cursor-pointer hover:text-primary"
+        className="text-primary/60 flex items-center font-bold mt-3 ml-4 cursor-pointer hover:text-primary"
         onClick={() => navigate(-1)}
         title="voltar"
       >
@@ -91,7 +101,7 @@ export function EditProfile() {
       <Wrapper className="bg-white shadow mt-6">
         <form
           onSubmit={(event) => updateProfile(event)}
-          className="flex  flex-wrap flex-col py-4"
+          className="flex flex-wrap flex-col py-4"
         >
           <div className="flex flex-wrap xl:flex-nowrap">
             <fieldset className="mr-6">
@@ -151,6 +161,8 @@ export function EditProfile() {
                   id="bio"
                   spellCheck={false}
                   placeholder="Adicione um resumo."
+                  value={bio}
+                  onChange={(event) => setBio(event.target.value)}
                   className="w-full resize-none placeholder:text-gray-400  p-4 border-0 bg-transparent text-lg leading-relaxed focus:ring-0"
                 />
               </label>
@@ -180,57 +192,50 @@ export function EditProfile() {
                     value={address?.logradouro}
                   />
                 </label>
-                <label htmlFor="number" className="flex-column gap-px w-1/4">
+                <label htmlFor="number" className="flex-column gap-px">
                   Número:
                   <input
-                    className="input input-clean"
                     type="text"
                     id="number"
                     name="number"
                     value={number}
                     onChange={(event) => setNumber(event.target.value)}
-                    data-testid="name"
+                    className="input input-clean"
                   />
                 </label>
               </div>
-              <div className="flex-start gap-3">
-                <label className="flex-column gap-px w-1/2">
-                  Bairro:
-                  <input disabled className="input" value={address?.bairro} />
-                </label>
-                <label className="flex-column gap-px w-1/2">
-                  Cidade:
-                  <input
-                    disabled
-                    className="input"
-                    value={address?.localidade}
-                  />
-                </label>
-                <label className="flex-column gap-px   w-1/4">
-                  UF:
-                  <input disabled className="input" value={address?.uf} />
-                </label>
-              </div>
-              <label htmlFor="complement" className="flex-column gap-px w-1/2">
+              <label htmlFor="complement" className="flex-column gap-px">
                 Complemento:
                 <input
-                  className="input input-clean"
-                  value={complement}
+                  type="text"
                   id="complement"
                   name="complement"
+                  value={complement}
                   onChange={(event) => setComplement(event.target.value)}
+                  className="input input-clean"
                 />
+              </label>
+              <label htmlFor="bairro" className="flex-column gap-px">
+                Bairro:
+                <input disabled className="input" value={address?.bairro} />
+              </label>
+              <label htmlFor="localidade" className="flex-column gap-px">
+                Localidade:
+                <input disabled className="input" value={address?.localidade} />
+              </label>
+              <label htmlFor="uf" className="flex-column gap-px">
+                UF:
+                <input disabled className="input" value={address?.uf} />
               </label>
             </fieldset>
           </div>
-          <div className="w-full flex items-center justify-center mt-6">
+          <div className="flex items-center justify-end p-4 mt-4">
             <button
               type="submit"
+              className="btn btn-primary"
               disabled={isSubmiting}
-              className="text-white w-36 flex items-center gap-2 btn bg-success disabled:bg-primary/50 disabled:cursor-not-allowed "
             >
-              <BiSave className="icon" />
-              <span className="font-semibold">Salvar</span>
+              <BiSave className="icon" /> Salvar
             </button>
           </div>
         </form>

@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { FormEvent, useEffect, useState } from "react";
+import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, FormEvent } from "react";
-import ViewContainer from "../../../templates/ViewContainer";
-import { BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useContextSelector } from "use-context-selector";
+import MediaPicker from "../../../components/MediaPicker";
 import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
+import ViewContainer from "../../../templates/ViewContainer";
 
 export function EditActivity() {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ export function EditActivity() {
   const [dateEvent, setDateEvent] = useState("");
   const [hoursEvent, setHoursEvent] = useState("");
   const [status, setStatus] = useState("");
-  // const [imageURL, setImageURL] = useState<string | undefined>("");
+  const [imageURL, setImageURL] = useState<string | undefined>("");
+  const [hasImageURL, setHasImageURL] = useState<boolean>(false);
 
   const { getById, update } = useContextSelector(
     ActivitiesContext,
@@ -29,12 +31,15 @@ export function EditActivity() {
     }
   );
 
+  async function validateImageExist(param: boolean) {
+    setHasImageURL(param);
+  }
   async function handleEditActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmiting(true);
-    update(id!, new FormData(event.currentTarget));
-    setIsSubmiting(false);
-    navigate("/activities");
+    if (await update(id!, hasImageURL, new FormData(event.currentTarget))) {
+      setIsSubmiting(false);
+    }
   }
 
   useEffect(() => {
@@ -46,7 +51,7 @@ export function EditActivity() {
       setDateEvent(selectedActivity.dateEvent);
       setHoursEvent(selectedActivity.hoursEvent);
       setStatus(selectedActivity.status);
-      // setImageURL(selectedActivity.image);
+      setImageURL(selectedActivity.image);
     }
     fetchData();
   }, [getById, id]);
@@ -67,6 +72,16 @@ export function EditActivity() {
       >
         <h1 className="text-lg md:text-xl mb-2">Editar Atividade</h1>
         <fieldset>
+          <div className="flex items-center gap-9 h-[115px]">
+            <label
+              htmlFor="media"
+              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
+            >
+              <BiCamera className={`icon`} />
+              Anexar imagem
+            </label>
+            <MediaPicker imageURL={imageURL} action={validateImageExist} />
+          </div>
           <label htmlFor="title" className="flex-1 flex flex-col mb-6">
             Título:
             <input
@@ -82,9 +97,9 @@ export function EditActivity() {
           </label>
           <label htmlFor="category" className="flex-1 flex flex-col mb-6">
             Categoria:
-            <select 
-              name="category" 
-              id="category" 
+            <select
+              name="category"
+              id="category"
               className="input input-clean bg-gray-200"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -139,9 +154,9 @@ export function EditActivity() {
           </div>
           <label htmlFor="status" className="flex-1 flex flex-col mb-6">
             Status:
-            <select 
-              name="status" 
-              id="status" 
+            <select
+              name="status"
+              id="status"
               className="input input-clean"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -151,16 +166,6 @@ export function EditActivity() {
               <option value="cancelado">Cancelar</option>
             </select>
           </label>
-          {/* <div className="flex items-center gap-9 h-[115px]">
-            <label
-              htmlFor="media"
-              className={`flex cursor-pointer items-center gap-1.5 hover:text-primary`}
-            >
-              <BiCamera className={`icon`} />
-              Anexar imagem
-            </label>
-            <MediaPicker />
-          </div> */}
         </fieldset>
         <div className="flex justify-end mt-5">
           <button
