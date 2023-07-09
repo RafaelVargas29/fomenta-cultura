@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useContextSelector } from "use-context-selector";
@@ -16,7 +16,7 @@ export function EditProfile() {
       return {
         updateProfileUser: context.updateProfileUser,
         saveInStorageProfileImage: context.saveProfileImage,
-        user: context.user,
+        user: context.user
       };
     });
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -44,13 +44,12 @@ export function EditProfile() {
   async function buscarDados() {
     const result = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
     if (result.status === 200) {
-      console.log(result.data);
       const obj: Address = {
         cep: result.data.cep,
         logradouro: result.data.logradouro,
         bairro: result.data.bairro,
         localidade: result.data.localidade,
-        uf: result.data.uf,
+        uf: result.data.uf
       };
       setAddress(obj);
     }
@@ -83,10 +82,9 @@ export function EditProfile() {
         localidade: address.localidade || "",
         uf: address.uf || "",
         number: data.get("number") || "SN",
-        complement: data.get("complement") || "SN",
-      },
+        complement: data.get("complement") || "SN"
+      }
     } as User;
-    console.log("d: ", obj);
     await updateProfileUser(obj, user?.id);
     setIsSubmiting(false);
   }
@@ -201,7 +199,7 @@ export function EditProfile() {
                     id="number"
                     name="number"
                     value={number}
-                    onChange={(event) =>setNumber(event.target.value)}
+                    onChange={(event) => setNumber(event.target.value)}
                     className="input input-clean"
                   />
                 </label>
@@ -223,11 +221,7 @@ export function EditProfile() {
               </label>
               <label htmlFor="localidade" className="flex-column gap-px">
                 Localidade:
-                <input
-                  disabled
-                  className="input"
-                  value={address?.localidade}
-                />
+                <input disabled className="input" value={address?.localidade} />
               </label>
               <label htmlFor="uf" className="flex-column gap-px">
                 UF:

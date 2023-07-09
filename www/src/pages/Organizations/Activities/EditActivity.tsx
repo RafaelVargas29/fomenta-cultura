@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, FormEvent } from "react";
-import ViewContainer from "../../../templates/ViewContainer";
+import { FormEvent, useEffect, useState } from "react";
 import { BiCamera, BiLeftArrowAlt, BiSave } from "react-icons/bi";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContextSelector } from "use-context-selector";
-import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
 import MediaPicker from "../../../components/MediaPicker";
+import { ActivitiesContext } from "../../../store/context/ActivitiesContext";
+import ViewContainer from "../../../templates/ViewContainer";
 
 export function EditActivity() {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ export function EditActivity() {
   const [hoursEvent, setHoursEvent] = useState("");
   const [status, setStatus] = useState("");
   const [imageURL, setImageURL] = useState<string | undefined>("");
+  const [hasImageURL, setHasImageURL] = useState<boolean>(false);
 
   const { getById, update } = useContextSelector(
     ActivitiesContext,
@@ -30,12 +31,15 @@ export function EditActivity() {
     }
   );
 
+  async function validateImageExist(param: boolean) {
+    setHasImageURL(param);
+  }
   async function handleEditActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmiting(true);
-    update(id!, new FormData(event.currentTarget));
-    setIsSubmiting(false);
-    navigate("/activities");
+    if (await update(id!, hasImageURL, new FormData(event.currentTarget))) {
+      setIsSubmiting(false);
+    }
   }
 
   useEffect(() => {
@@ -76,7 +80,7 @@ export function EditActivity() {
               <BiCamera className={`icon`} />
               Anexar imagem
             </label>
-            <MediaPicker imageURL={imageURL} />
+            <MediaPicker imageURL={imageURL} action={validateImageExist} />
           </div>
           <label htmlFor="title" className="flex-1 flex flex-col mb-6">
             Título:
@@ -93,12 +97,12 @@ export function EditActivity() {
           </label>
           <label htmlFor="category" className="flex-1 flex flex-col mb-6">
             Categoria:
-            <select 
-              name="category" 
-              id="category" 
+            <select
+              name="category"
+              id="category"
               className="input input-clean bg-gray-200"
               value={category}
-              onChange={(e) =>setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value)}
               data-testid="category"
             >
               <option value="Esporte">Esporte</option>
@@ -150,9 +154,9 @@ export function EditActivity() {
           </div>
           <label htmlFor="status" className="flex-1 flex flex-col mb-6">
             Status:
-            <select 
-              name="status" 
-              id="status" 
+            <select
+              name="status"
+              id="status"
               className="input input-clean"
               value={status}
               onChange={(e) => setStatus(e.target.value)}

@@ -1,10 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 
 interface MediaPickerProps {
-  imageURL: string | undefined;
+  imageURL?: string | undefined;
+  action: (title: boolean) => void;
 }
 
-export default function MediaPicker({ imageURL }: MediaPickerProps) {
+export default function MediaPicker({ imageURL, action }: MediaPickerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const types = ["image/jpeg", "image/svg+xml", "image/jpg", "image/png"];
 
@@ -13,6 +14,7 @@ export default function MediaPicker({ imageURL }: MediaPickerProps) {
 
     if (files && types.includes(files.type)) {
       const previewURL = URL.createObjectURL(files);
+      action(true);
       setPreview(previewURL);
     } else {
       return;

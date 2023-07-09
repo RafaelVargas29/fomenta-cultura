@@ -89,8 +89,6 @@ export function CreateActivity() {
     setIsSubmiting(true);
     await create(new FormData(event.currentTarget));
     setIsSubmiting(false);
-
-    navigate("/activities");
   }
 
   return (
@@ -185,7 +183,7 @@ export function CreateActivity() {
                 <BiCamera className={`icon`} />
                 Adicionar um flyer
               </label>
-              <MediaPicker />
+              <MediaPicker action={() => {}} />
             </div>
           </fieldset>
           <div className="flex justify-end mt-5">

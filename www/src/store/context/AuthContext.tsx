@@ -49,7 +49,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userResult = await services.users.getUser(
         loggedInUser.split('"')[1]
       );
-      console.log("context api", userResult);
       setUser(userResult);
     }
   }
